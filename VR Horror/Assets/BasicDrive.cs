@@ -92,7 +92,7 @@ public class BasicDrive : MonoBehaviour
 
             player.transform.position = new Vector3(seatPos.position.x, seatPos.position.y - player.GetComponent<CharacterController>().height/2, seatPos.position.z);
             player.transform.rotation = Quaternion.Euler(0, seatPos.rotation.y, 0);
-            player.transform.parent = this.transform;
+            player.transform.parent = seatPos.transform;
 
             sitting = true;
         }
@@ -106,7 +106,7 @@ public class BasicDrive : MonoBehaviour
             player.GetComponent<CharacterController>().enabled = true;
 
             player.transform.position = dismountPos.position;
-            player.transform.parent = null;
+            player.transform.parent = gameObject.transform;
 
             sitting = false;
         }
