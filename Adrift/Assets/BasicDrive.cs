@@ -29,7 +29,15 @@ public class BasicDrive : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sitting = false;
+
         rb = GetComponent<Rigidbody>();
+        //Make the ship static to start;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+
+        //attach the player to the ship
+        player.transform.parent = gameObject.transform;
+
     }
 
     private void Awake()
@@ -70,14 +78,7 @@ public class BasicDrive : MonoBehaviour
 
 
             float rotDiff = Mathf.Abs(transform.eulerAngles.y - currRotation);
-            //if (rotDiff > 20)
-            //{
-               gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, currRotation, 0), rotationSpeed * Time.deltaTime);
-            //}
-            //if (rotDiff <= 20)
-            //{
-            //    gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, transform.rotation.y + currRotation, 0), rotationSpeed/2 * Time.deltaTime);
-            //}
+            gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, currRotation, 0), rotationSpeed * Time.deltaTime);
         }
     }
 
@@ -90,9 +91,18 @@ public class BasicDrive : MonoBehaviour
             player.GetComponent<ContinuousMoveProviderBase>().enabled = false;
             player.GetComponent<CharacterController>().enabled = false;
 
+            //player.transform.parent = seatPos.transform;
+
             player.transform.position = new Vector3(seatPos.position.x, seatPos.position.y - player.GetComponent<CharacterController>().height/2, seatPos.position.z);
+            //player.transform.position = Vector3.zero;
             player.transform.rotation = Quaternion.Euler(0, seatPos.rotation.y, 0);
-            player.transform.parent = seatPos.transform;
+
+
+            //make sure the rigidbody can move
+            //rb.constraints = RigidbodyConstraints.None;
+            //rb.constraints = RigidbodyConstraints.FreezePositionY;
+            //rb.constraints = RigidbodyConstraints.FreezeRotationX;
+            //rb.constraints = RigidbodyConstraints.FreezeRotationZ;
 
             sitting = true;
         }
@@ -107,6 +117,9 @@ public class BasicDrive : MonoBehaviour
 
             player.transform.position = dismountPos.position;
             player.transform.parent = gameObject.transform;
+
+            //make sure rigidbody does not move while not driving
+            rb.constraints = RigidbodyConstraints.FreezeAll;
 
             sitting = false;
         }
