@@ -43,7 +43,7 @@ public class BasicDrive : MonoBehaviour
         //rb.constraints = RigidbodyConstraints.FreezeAll;
 
         //attach the player to the ship
-        player.transform.parent = gameObject.transform;
+        //player.transform.parent = gameObject.transform;
 
     }
 
@@ -75,15 +75,10 @@ public class BasicDrive : MonoBehaviour
             currRotation = rotation.GetComponent<ShipMovment>().rot;
 
             //if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude) <= Math.Abs(currThrottle))
-            if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
+            if (Math.Abs(currThrottle) > 0.5f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
             {
                 Debug.Log("Driving");
-                rb.AddForce(seatPos.transform.forward * currThrottle, ForceMode.Impulse);
-            }
-
-            if(Math.Abs(currThrottle) == 0f)
-            {
-                rb.velocity = Vector3.zero;
+                rb.AddForce(seatPos.transform.forward * currThrottle * 1000.0f, ForceMode.Force);
             }
 
 
@@ -91,6 +86,11 @@ public class BasicDrive : MonoBehaviour
             gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, currRotation, 0), rotationSpeed * Time.deltaTime);
 
             currVelocity = rb.velocity.magnitude;
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
+            gameObject.isStatic = true;
         }
 
         speedTracker.text = currVelocity.ToString();
@@ -101,6 +101,8 @@ public class BasicDrive : MonoBehaviour
     {
         if (!sitting)
         {
+            gameObject.isStatic = false;
+
             //player.transform.parent = null;
 
             player.GetComponent<LocomotionSystem>().enabled = false;
@@ -111,11 +113,11 @@ public class BasicDrive : MonoBehaviour
             player.transform.position = new Vector3(seatPos.position.x, seatPos.position.y - player.gameObject.GetComponent<CharacterController>().height/2, seatPos.position.z);
             player.transform.rotation = Quaternion.Euler(0, seatPos.rotation.y, 0);
 
-            //  player.transform.parent = seatPos.transform;
+            player.transform.parent = gameObject.transform;
             //player.transform.localPosition = Vector3.zero;
 
             //make sure the rigidbody can move
-            //rb.constraints = RigidbodyConstraints.None;
+            rb.constraints = RigidbodyConstraints.None;
             //rb.constraints = RigidbodyConstraints.FreezeRotationX;
             //rb.constraints = RigidbodyConstraints.FreezeRotationZ;
             //rb.constraints = RigidbodyConstraints.FreezePositionY;
@@ -126,18 +128,23 @@ public class BasicDrive : MonoBehaviour
         
         else
         {
+
+            player.transform.position = dismountPos.position;
+            //player.transform.parent = gameObject.transform;
+            player.transform.parent = null;
+
+            player.GetComponent<LocomotionSystem>().enabled = true;
+            player.GetComponent<ContinuousMoveProviderBase>().enabled = true;
+            player.GetComponent<CharacterController>().enabled = true;
+
+
+
+            gameObject.isStatic = true;
             rb.velocity = Vector3.zero;
             throttle.GetComponent<ShipMovment>().speed = 0f;
 
-            player.GetComponent<LocomotionSystem>().enabled = true;
-            player.GetComponent<ContinuousMoveProviderBase>().enabled = true; 
-            player.GetComponent<CharacterController>().enabled = true;
-
-            player.transform.position = dismountPos.position;
-            player.transform.parent = gameObject.transform;
-
             //make sure rigidbody does not move while not driving
-            //rb.constraints = RigidbodyConstraints.FreezeAll;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
 
             sitting = false;
         }
@@ -149,7 +156,7 @@ public class BasicDrive : MonoBehaviour
         Debug.Log("DISMOUNT");
         if (sitting)
         {
-            Sit();
+            //Sit();
         }
     }
 }

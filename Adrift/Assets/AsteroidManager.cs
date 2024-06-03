@@ -58,7 +58,7 @@ public class AsteroidManager : MonoBehaviour
     private void DefaultAsteroids()
     {
         GameObject Ship = GameObject.Find("Ship");
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 30; i++)
         {
             GameObject tempObj = GetAsteroid();
             if (tempObj != null)

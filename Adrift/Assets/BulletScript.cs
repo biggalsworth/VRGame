@@ -23,8 +23,9 @@ public class BulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag != "Player")
+        if(other.tag != "Player" && other.tag != "Ignore")
         {
+            Debug.Log(other.transform.name);
             destroyBullet();
         }
         if(other.tag == "Enemy")
