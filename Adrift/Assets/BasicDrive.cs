@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -23,6 +24,10 @@ public class BasicDrive : MonoBehaviour
 
     private float currThrottle;
     private float currRotation;
+
+    public TextMeshProUGUI speedTracker;
+    [HideInInspector]
+    public float currVelocity = 0.0f;
 
     private Rigidbody rb;
 
@@ -79,7 +84,11 @@ public class BasicDrive : MonoBehaviour
 
             float rotDiff = Mathf.Abs(transform.eulerAngles.y - currRotation);
             gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, currRotation, 0), rotationSpeed * Time.deltaTime);
+
+            currVelocity = rb.velocity.magnitude;
         }
+
+        speedTracker.text = currThrottle.ToString();
     }
 
 
@@ -87,16 +96,18 @@ public class BasicDrive : MonoBehaviour
     {
         if (!sitting)
         {
+            //player.transform.parent = null;
+
             player.GetComponent<LocomotionSystem>().enabled = false;
             player.GetComponent<ContinuousMoveProviderBase>().enabled = false;
             player.GetComponent<CharacterController>().enabled = false;
 
-            //player.transform.parent = seatPos.transform;
 
-            player.transform.position = new Vector3(seatPos.position.x, seatPos.position.y - player.GetComponent<CharacterController>().height/2, seatPos.position.z);
-            //player.transform.position = Vector3.zero;
+            player.transform.position = new Vector3(seatPos.position.x, seatPos.position.y - player.gameObject.GetComponent<CharacterController>().height/2, seatPos.position.z);
             player.transform.rotation = Quaternion.Euler(0, seatPos.rotation.y, 0);
 
+            //  player.transform.parent = seatPos.transform;
+            //player.transform.localPosition = Vector3.zero;
 
             //make sure the rigidbody can move
             //rb.constraints = RigidbodyConstraints.None;
@@ -123,6 +134,7 @@ public class BasicDrive : MonoBehaviour
 
             sitting = false;
         }
+        
     }
     private void dismount(InputAction.CallbackContext context)
     {

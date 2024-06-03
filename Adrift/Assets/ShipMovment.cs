@@ -19,6 +19,7 @@ public class ShipMovment : MonoBehaviour
 
     [HideInInspector]
     public float speed;
+    [HideInInspector]
     public float rot;
 
     private float pos;
