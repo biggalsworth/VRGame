@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DespawnChecker : MonoBehaviour
 {
+
+    public GameObject ship;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,14 +16,14 @@ public class DespawnChecker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position = ship.transform.position;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "SpawnedObject")
+        if (other.gameObject.tag == "SpawnedObject")
         {
-            other.gameObject.GetComponent<SpawnedObjClass>().available = false;
+            other.gameObject.GetComponent<SpawnedObjClass>().available = true;
             other.gameObject.SetActive(false);
         }
     }

@@ -65,8 +65,8 @@ public class AsteroidManager : MonoBehaviour
             {
                 while (true)
                 {
-                    Vector3 randPos = new Vector3(Ship.transform.position.x + UnityEngine.Random.Range(-100, 100), Ship.transform.position.y + UnityEngine.Random.Range(-50, 50), Ship.transform.position.z + UnityEngine.Random.Range(-50, 50));
-                    if (Vector3.Distance(Ship.transform.position, randPos) > 90)
+                    Vector3 randPos = new Vector3(Ship.transform.position.x + UnityEngine.Random.Range(-90, 90), Ship.transform.position.y + UnityEngine.Random.Range(-90, 90), Ship.transform.position.z + UnityEngine.Random.Range(-90, 90));
+                    if (Vector3.Distance(Ship.transform.position, randPos) > 70)
                     {
                         RaycastHit hit;
                         if (Physics.SphereCast(randPos, 20, transform.forward, out hit, 20))

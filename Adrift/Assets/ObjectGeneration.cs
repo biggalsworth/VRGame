@@ -19,7 +19,7 @@ public class ObjectGeneration : MonoBehaviour
     void Start()
     {
         shipStats = Ship.GetComponent<BasicDrive>();
-        spawnDist = Mathf.Abs(GameObject.Find("SpawnDistance").GetComponent<SphereCollider>().radius + 50);
+        spawnDist = Mathf.Abs(250);
 
     }
 
@@ -34,13 +34,12 @@ void Update()
                 if (tempObj != null)
                 {
                     Vector3 randPos = new Vector3(Ship.transform.position.x + Random.Range(-spawnDist, spawnDist), Ship.transform.position.y + Random.Range(-spawnDist, spawnDist), Ship.transform.position.z + Random.Range(-spawnDist, spawnDist));
-                    if(Vector3.Distance(Ship.transform.position, randPos) > spawnDist - 50)
+                    if(Vector3.Distance(Ship.transform.position, randPos) > 150)
                     {
                         RaycastHit hit;
                         if(Physics.SphereCast(randPos, 20, transform.forward, out hit, 20))
                         {
-                            //spawned in another object;
-                            tempObj.GetComponent<SpawnedObjClass>().available = false;
+
                             return;
                         }
                         else

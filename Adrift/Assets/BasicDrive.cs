@@ -75,7 +75,7 @@ public class BasicDrive : MonoBehaviour
             currRotation = rotation.GetComponent<ShipMovment>().rot;
 
             //if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude) <= Math.Abs(currThrottle))
-            if (Math.Abs(currThrottle) > 0.5f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
+            if (Math.Abs(currThrottle) > 0.1f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
             {
                 Debug.Log("Driving");
                 rb.AddForce(seatPos.transform.forward * currThrottle * 1000.0f, ForceMode.Force);
@@ -85,7 +85,6 @@ public class BasicDrive : MonoBehaviour
             float rotDiff = Mathf.Abs(transform.eulerAngles.y - currRotation);
             gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, currRotation, 0), rotationSpeed * Time.deltaTime);
 
-            currVelocity = rb.velocity.magnitude;
         }
         else
         {
@@ -93,6 +92,8 @@ public class BasicDrive : MonoBehaviour
             gameObject.isStatic = true;
         }
 
+        currVelocity = rb.velocity.magnitude;
+        currVelocity = Mathf.Round(currVelocity * 100) / 100;
         speedTracker.text = currVelocity.ToString();
     }
 
