@@ -1,2 +1,42 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+
+# 3D formats
+*.3dm lfs-file
+*.3ds lfs-file
+*.abc lfs-file
+*.blend lfs-file
+*.c4d lfs-file
+*.collada lfs-file
+*.dae lfs-file
+*.dfx lfs-file
+*.dxf lfs-file
+*.FBX lfs-file
+*.fbx lfs-file
+*.jas lfs-file
+*.lws lfs-file
+*.lwo lfs-file
+*.lwo2 lfs-file
+*.lxo lfs-file
+*.ma lfs-file
+*.max lfs-file
+*.mb lfs-file
+*.obj lfs-file
+*.ply lfs-file
+*.skp lfs-file
+*.stl lfs-file
+*.ztl lfs-file
+
+# Audio formats
+*.aif lfs-file
+*.aiff lfs-file
+*.it lfs-file
+*.mod lfs-file
+*.mp3 lfs-file
+*.ogg lfs-file
+*.rns lfs-file
+*.reason lfs-file
+*.s3m lfs-file
+*.wav lfs-file
+*.xm lfs-file
