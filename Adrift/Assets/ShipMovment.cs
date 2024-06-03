@@ -50,7 +50,7 @@ public class ShipMovment : MonoBehaviour
 
     public void ThrottleChange(float change)
     {
-        if(speed+change < 5 && speed+change > -5)
+        if(speed+change < 6 && speed+change > -6)
         {
             speed += change;
         }

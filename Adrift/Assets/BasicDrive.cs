@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class BasicDrive : MonoBehaviour
@@ -19,6 +20,7 @@ public class BasicDrive : MonoBehaviour
     [Header("Levers")]
     public GameObject throttle;
     public GameObject rotation;
+    public Slider throttleSlider;
 
     private float rotationSpeed = 50;
 
@@ -38,7 +40,7 @@ public class BasicDrive : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         //Make the ship static to start;
-        rb.constraints = RigidbodyConstraints.FreezeAll;
+        //rb.constraints = RigidbodyConstraints.FreezeAll;
 
         //attach the player to the ship
         player.transform.parent = gameObject.transform;
@@ -68,12 +70,15 @@ public class BasicDrive : MonoBehaviour
             //currThrottle = throttle.GetComponent<HingeJoint>().angle;
             //currRotation = Math.Abs(rotation.GetComponent<HingeJoint>().angle);
 
-            currThrottle = throttle.GetComponent<ShipMovment>().speed;
+            //currThrottle = throttle.GetComponent<ShipMovment>().speed;
+            currThrottle = throttleSlider.value;
             currRotation = rotation.GetComponent<ShipMovment>().rot;
 
-            if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude) < Math.Abs(currThrottle))
+            //if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude) <= Math.Abs(currThrottle))
+            if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
             {
-                rb.AddForce(transform.forward * currThrottle, ForceMode.Force);
+                Debug.Log("Driving");
+                rb.AddForce(seatPos.transform.forward * currThrottle, ForceMode.Impulse);
             }
 
             if(Math.Abs(currThrottle) == 0f)
@@ -88,7 +93,7 @@ public class BasicDrive : MonoBehaviour
             currVelocity = rb.velocity.magnitude;
         }
 
-        speedTracker.text = currThrottle.ToString();
+        speedTracker.text = currVelocity.ToString();
     }
 
 
@@ -111,12 +116,14 @@ public class BasicDrive : MonoBehaviour
 
             //make sure the rigidbody can move
             //rb.constraints = RigidbodyConstraints.None;
-            //rb.constraints = RigidbodyConstraints.FreezePositionY;
             //rb.constraints = RigidbodyConstraints.FreezeRotationX;
             //rb.constraints = RigidbodyConstraints.FreezeRotationZ;
+            //rb.constraints = RigidbodyConstraints.FreezePositionY;
+
 
             sitting = true;
         }
+        
         else
         {
             rb.velocity = Vector3.zero;
@@ -130,10 +137,11 @@ public class BasicDrive : MonoBehaviour
             player.transform.parent = gameObject.transform;
 
             //make sure rigidbody does not move while not driving
-            rb.constraints = RigidbodyConstraints.FreezeAll;
+            //rb.constraints = RigidbodyConstraints.FreezeAll;
 
             sitting = false;
         }
+        
         
     }
     private void dismount(InputAction.CallbackContext context)

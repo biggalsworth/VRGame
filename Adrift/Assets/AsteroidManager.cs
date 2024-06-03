@@ -47,7 +47,6 @@ public class AsteroidManager : MonoBehaviour
                 asteroids.RemoveAt(i);
                 asteroids.Add(tempRoid);
 
-                tempRoid.SetActive(true);
                 tempRoid.GetComponent<AsteroidClass>().available = false;
                 return tempRoid;
             }
@@ -63,22 +62,26 @@ public class AsteroidManager : MonoBehaviour
             GameObject tempObj = GetAsteroid();
             if (tempObj != null)
             {
-                Vector3 randPos = new Vector3(Ship.transform.position.x + UnityEngine.Random.Range(-100, 100), Ship.transform.position.y + UnityEngine.Random.Range(-50, 50), Ship.transform.position.z + UnityEngine.Random.Range(-50, 50));
-                if (Vector3.Distance(Ship.transform.position, randPos) > 90)
+                while (true)
                 {
-                    RaycastHit hit;
-                    if (Physics.SphereCast(randPos, 20, transform.forward, out hit, 20))
+                    Vector3 randPos = new Vector3(Ship.transform.position.x + UnityEngine.Random.Range(-100, 100), Ship.transform.position.y + UnityEngine.Random.Range(-50, 50), Ship.transform.position.z + UnityEngine.Random.Range(-50, 50));
+                    if (Vector3.Distance(Ship.transform.position, randPos) > 90)
                     {
-                        //spawned in another object;
-                        return;
-                    }
-                    else
-                    {
-                        tempObj.transform.position = randPos;
-                    }
+                        RaycastHit hit;
+                        if (Physics.SphereCast(randPos, 20, transform.forward, out hit, 20))
+                        {
+                            //spawned in another object;
+                            continue;
+                        }
+                        else
+                        {
+                            tempObj.SetActive(true);
+                            tempObj.transform.position = randPos;
+                            break;
+                        }
 
+                    }
                 }
-
             }
         }
     }
