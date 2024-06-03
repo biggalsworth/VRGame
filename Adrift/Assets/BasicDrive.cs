@@ -78,7 +78,7 @@ public class BasicDrive : MonoBehaviour
             if (Math.Abs(currThrottle) > 0.1f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
             {
                 Debug.Log("Driving");
-                rb.AddForce(seatPos.transform.forward * currThrottle * 1000.0f, ForceMode.Force);
+                rb.AddForce(seatPos.transform.forward * (currThrottle*1.5f) * 1000.0f, ForceMode.Force);
             }
 
 

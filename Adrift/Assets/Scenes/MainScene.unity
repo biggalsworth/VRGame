@@ -1651,7 +1651,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1711,6 +1711,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8cd88430dd3ebe44287b9a57d4a352b3, type: 3}
   - {fileID: 8300000, guid: 23ad58d9ec4225c47aadfd0b0b208e7b, type: 3}
   - {fileID: 8300000, guid: f693e3a2102c8c742bf699674a12d5f4, type: 3}
+  - {fileID: 8300000, guid: ad99df42142d1ec478280caaec2fbc21, type: 3}
+  - {fileID: 8300000, guid: 0c45c7106fc1af44b95deb500a021381, type: 3}
   volume: {fileID: 1910383451}
 --- !u!1 &262716887
 GameObject:
@@ -5727,7 +5729,7 @@ Transform:
   m_GameObject: {fileID: 955515649}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.368, y: 0, z: 0.011}
+  m_LocalPosition: {x: -0.368, y: 0, z: -0.044}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
