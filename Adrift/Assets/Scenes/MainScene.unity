@@ -1741,6 +1741,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1350942594}
+  - {fileID: 1848738904}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &420562930
@@ -7664,7 +7665,6 @@ Transform:
   m_Children:
   - {fileID: 897425263}
   - {fileID: 1247614287}
-  - {fileID: 1848738904}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1652736793
@@ -9102,6 +9102,7 @@ GameObject:
   - component: {fileID: 1848738904}
   - component: {fileID: 1848738906}
   - component: {fileID: 1848738905}
+  - component: {fileID: 1848738907}
   m_Layer: 0
   m_Name: SpawnDistance
   m_TagString: Untagged
@@ -9117,12 +9118,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1848738903}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.70710677, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.7071064, z: -0, w: 0.7071072}
+  m_LocalPosition: {x: -17.193407, y: -1.0783564, z: -0.05288188}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1652736792}
+  m_Father: {fileID: 420562929}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!135 &1848738905
 SphereCollider:
@@ -9172,6 +9173,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1848738907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848738903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b63ac17d957264faccd68ec7c2d7d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1874627187
 GameObject:
   m_ObjectHideFlags: 0

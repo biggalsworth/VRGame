@@ -40,7 +40,7 @@ void Update()
                         if(Physics.SphereCast(randPos, 20, transform.forward, out hit, 20))
                         {
                             //spawned in another object;
-                            tempObj.GetComponent<AsteroidClass>().available = false;
+                            tempObj.GetComponent<SpawnedObjClass>().available = false;
                             return;
                         }
                         else

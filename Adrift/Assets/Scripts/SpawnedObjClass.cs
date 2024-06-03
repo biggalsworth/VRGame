@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AsteroidClass : MonoBehaviour
+public class SpawnedObjClass : MonoBehaviour
 {
     public bool available = true;
 

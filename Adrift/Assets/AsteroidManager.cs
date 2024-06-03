@@ -21,8 +21,9 @@ public class AsteroidManager : MonoBehaviour
         while (asteroids.Count < asteroidAmount)
         {
             GameObject tempRoid = Instantiate(asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Count)], gameObject.transform);
-            tempRoid.AddComponent<AsteroidClass>();
+            tempRoid.AddComponent<SpawnedObjClass>();
             tempRoid.SetActive(false);
+            tempRoid.tag = "SpawnedObject";
             asteroids.Add(tempRoid);
         }
 
@@ -41,13 +42,13 @@ public class AsteroidManager : MonoBehaviour
         for(int i = 0; i < asteroids.Count; i++)
         {
             GameObject tempRoid = asteroids[i];
-            if (tempRoid.GetComponent<AsteroidClass>().available)
+            if (tempRoid.GetComponent<SpawnedObjClass>().available)
             {
                 //GameObject tempRoid = asteroids[index];
                 asteroids.RemoveAt(i);
                 asteroids.Add(tempRoid);
 
-                tempRoid.GetComponent<AsteroidClass>().available = false;
+                tempRoid.GetComponent<SpawnedObjClass>().available = false;
                 return tempRoid;
             }
         }
