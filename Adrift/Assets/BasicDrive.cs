@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class BasicDrive : MonoBehaviour
@@ -22,7 +23,7 @@ public class BasicDrive : MonoBehaviour
     public GameObject rotation;
     public Slider throttleSlider;
 
-    private float rotationSpeed = 50;
+    private float rotationSpeed = 1.5f;
 
     private float currThrottle;
     private float currRotation;
@@ -65,36 +66,44 @@ public class BasicDrive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (sitting)
+        if (gameObject.GetComponent<ShipStats>().shipHealth > 10)
         {
-            //currThrottle = throttle.GetComponent<HingeJoint>().angle;
-            //currRotation = Math.Abs(rotation.GetComponent<HingeJoint>().angle);
 
-            //currThrottle = throttle.GetComponent<ShipMovment>().speed;
-            currThrottle = throttleSlider.value;
-            currRotation = rotation.GetComponent<ShipMovment>().rot;
-
-            //if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude) <= Math.Abs(currThrottle))
-            if (Math.Abs(currThrottle) > 0.1f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
+            if (sitting)
             {
-                Debug.Log("Driving");
-                rb.AddForce(seatPos.transform.forward * (currThrottle*1.5f) * 1000.0f, ForceMode.Force);
+                currThrottle = throttleSlider.value;
+                currRotation = rotation.GetComponent<ShipMovment>().rot;
+
+                //if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude) <= Math.Abs(currThrottle))
+                if (Math.Abs(currThrottle) > 0.1f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
+                {
+                    //add forward direction based on seat orientation
+                    //make sure to make the throttle increase with the ships allowed speed in ship stats
+                    //*1000.0 to counteract the heavy mass
+                    rb.AddForce(seatPos.transform.forward * (currThrottle * GetComponent<ShipStats>().speed) * 1000.0f, ForceMode.Force);
+                }
+
+
+                float rotDiff = Mathf.Abs(transform.eulerAngles.y - currRotation);
+                //gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, currRotation, 0), rotationSpeed * Time.deltaTime);
+                gameObject.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, currRotation, 0), Time.deltaTime * rotationSpeed);
+
+            }
+            else
+            {
+                rb.velocity = Vector3.zero;
+                gameObject.isStatic = true;
             }
 
-
-            float rotDiff = Mathf.Abs(transform.eulerAngles.y - currRotation);
-            gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, currRotation, 0), rotationSpeed * Time.deltaTime);
-
+            currVelocity = rb.velocity.magnitude;
+            currVelocity = Mathf.Round(currVelocity * 100) / 100;
+            speedTracker.text = currVelocity.ToString();
         }
         else
         {
             rb.velocity = Vector3.zero;
             gameObject.isStatic = true;
         }
-
-        currVelocity = rb.velocity.magnitude;
-        currVelocity = Mathf.Round(currVelocity * 100) / 100;
-        speedTracker.text = currVelocity.ToString();
     }
 
 
@@ -152,9 +161,23 @@ public class BasicDrive : MonoBehaviour
         
         
     }
+
+    public void ChangeAltitude(float force)
+    {
+        if (sitting && gameObject.GetComponent<ShipStats>().shipHealth > 10)
+        {
+            /*
+            //reset velocity
+            Vector3 vel = rb.velocity;
+            vel.x = 0;
+            rb.velocity = vel;
+            */
+            rb.MovePosition(transform.position + (seatPos.up * force) * Time.deltaTime);
+        }
+    }
+    
     private void dismount(InputAction.CallbackContext context)
     {
-        Debug.Log("DISMOUNT");
         if (sitting)
         {
             //Sit();

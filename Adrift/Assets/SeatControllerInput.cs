@@ -41,7 +41,6 @@ public class SeatControllerInput : MonoBehaviour
     {
         if (player != null)
         {
-            Debug.Log("DISMOUNT");
             ship.Sit();
         }
     }

@@ -34,7 +34,7 @@ void Update()
                 if (tempObj != null)
                 {
                     Vector3 randPos = new Vector3(Ship.transform.position.x + Random.Range(-spawnDist, spawnDist), Ship.transform.position.y + Random.Range(-spawnDist, spawnDist), Ship.transform.position.z + Random.Range(-spawnDist, spawnDist));
-                    if(Vector3.Distance(Ship.transform.position, randPos) > 150)
+                    if(Vector3.Distance(Ship.transform.position, randPos) > 170)
                     {
                         RaycastHit hit;
                         if(Physics.SphereCast(randPos, 20, transform.forward, out hit, 20))

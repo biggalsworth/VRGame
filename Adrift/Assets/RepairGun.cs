@@ -26,9 +26,8 @@ public class RepairGun : MonoBehaviour
 
             RaycastHit hit;
             // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(startPos.position, startPos.forward, out hit, 10f))
+            if (Physics.Raycast(startPos.position, startPos.forward, out hit, 5f))
             {
-                Debug.Log(hit.collider.gameObject.layer);
                 if (hit.collider.gameObject.layer == 6)
                 {
                     if (currPart != hit.collider.gameObject)
@@ -41,7 +40,6 @@ public class RepairGun : MonoBehaviour
                         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
 
                         //set what part we are currently fixing
-                        Debug.Log("TRYING TO HEAL");
                         currPart = hit.collider.gameObject;
                         currPart.GetComponent<ShipPart>().repairing = true;
                     }

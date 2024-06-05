@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PartsHandler : MonoBehaviour
@@ -9,7 +10,7 @@ public class PartsHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BreakParts();
+        //BreakPart();
     }
 
     // Update is called once per frame
@@ -18,13 +19,17 @@ public class PartsHandler : MonoBehaviour
         
     }
 
-    public void BreakParts()
+    public void BreakPart()
     {
-        //for(int i = 0; i < 3; i++)
-        //{
-        //    Parts[Random.Range(0, Parts.Count)].GetComponent<ShipPart>().Break();
-        //}
-        Parts[0].GetComponent<ShipPart>().Break();
-
+        for(int i = 0; i < Parts.Count-1; i++)
+        {
+            GameObject part = Parts[i];
+            if (part.GetComponent<ShipPart>().currHealth >= part.GetComponent<ShipPart>().partHealth)
+            {
+                Debug.Log("Break part" + i);
+                part.GetComponent<ShipPart>().Break();
+                break;
+            }
+        }
     }
 }

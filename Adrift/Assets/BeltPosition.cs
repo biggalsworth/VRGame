@@ -6,7 +6,7 @@ public class BeltPosition : MonoBehaviour
 {
     public GameObject Camera;
     public float offset = 1.0f;
-    float rotSpeed = 25f;
+    float rotSpeed = 50f;
     private Vector3 newPos;
 
     // Start is called before the first frame update
@@ -25,15 +25,15 @@ public class BeltPosition : MonoBehaviour
         }
         else if(rotDiff >= 40 && rotDiff < 60)
         {
-            gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, Camera.transform.eulerAngles.y, 0), (rotSpeed / 2) * Time.deltaTime);
+            gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, Camera.transform.eulerAngles.y, 0), (rotSpeed / 1.5f) * Time.deltaTime);
         }
         else if(rotDiff >= 20 && rotDiff < 40)
         {
-            gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, Camera.transform.eulerAngles.y, 0), (rotSpeed / 4) * Time.deltaTime);
+            gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, Camera.transform.eulerAngles.y, 0), (rotSpeed / 2.5f) * Time.deltaTime);
         }
-        else if(rotDiff < 20)
+        else if(rotDiff < 5)
         {
-            gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, Camera.transform.eulerAngles.y, 0), (rotSpeed / 8) * Time.deltaTime);
+            gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, Camera.transform.eulerAngles.y, 0), (rotSpeed / 4) * Time.deltaTime);
         }
         
         newPos = new Vector3(Camera.transform.position.x, Camera.transform.position.y - offset, Camera.transform.position.z);

@@ -10,18 +10,18 @@ public class AsteroidManager : MonoBehaviour
 
     private List<GameObject> asteroids = new List<GameObject>();
 
-    public int asteroidAmount = 50;
+    public int asteroidAmount = 100;
 
     //public List<GameObject> asteroids;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(asteroidPrefabs.Count - 1);
         while (asteroids.Count < asteroidAmount)
         {
             GameObject tempRoid = Instantiate(asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Count)], gameObject.transform);
             tempRoid.AddComponent<SpawnedObjClass>();
+            tempRoid.GetComponent<SpawnedObjClass>().type = ObjectType.Asteroid;
             tempRoid.SetActive(false);
             tempRoid.tag = "SpawnedObject";
             asteroids.Add(tempRoid);
@@ -58,7 +58,7 @@ public class AsteroidManager : MonoBehaviour
     private void DefaultAsteroids()
     {
         GameObject Ship = GameObject.Find("Ship");
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 40; i++)
         {
             GameObject tempObj = GetAsteroid();
             if (tempObj != null)

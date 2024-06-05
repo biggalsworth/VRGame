@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ShipPart : MonoBehaviour
 {
-    int partHealth = 10;
+    public int partHealth = 10;
+    [HideInInspector]
     public int currHealth = 0;
 
     [HideInInspector]
+    bool broken;
     public bool repairing = false;
     bool canHeal = true;
 
@@ -15,7 +17,7 @@ public class ShipPart : MonoBehaviour
     public GameObject repairedMesh;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         currHealth = partHealth;
     }
@@ -26,9 +28,14 @@ public class ShipPart : MonoBehaviour
         if (canHeal && currHealth < partHealth)
         {
             StartCoroutine(Repair());
+            broken = true;
         }
-        if (currHealth >= partHealth)
+        if (currHealth >= partHealth && broken)
         {
+            broken = false;
+            Debug.Log("REPAIRED");
+            GameObject.FindGameObjectWithTag("ShipParent").GetComponent<ShipStats>().shipHealth += 10f;
+            GameObject.FindGameObjectWithTag("ShipParent").GetComponent<ShipStats>().damageSeverity -= 1;
             repairedMesh.SetActive(true);
             brokenMesh.SetActive(false);
         }
