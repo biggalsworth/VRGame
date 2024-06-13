@@ -40,22 +40,26 @@ public class SpawnedObjClass : MonoBehaviour
             if(type == ObjectType.Asteroid)
             {
                 ship.GetComponent<ShipStats>().GainItems(5.0f);
+                GetComponent<Fracture>().FractureObject();
             }
+            else
+            {
+                Available();
+            }
+            /*
             available = true;
             currDurability = durability;
 
             gameObject.SetActive(false);
+            */
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+
+    public void Available()
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ship"))
-        {
-            //currDurability = 0;
-            //ship.GetComponent<ShipStats>().TakeDamage(10f);
-            //Debug.Log("HIT SHIP");
-            //available = true;
-        }
+        available = true;
+        currDurability = durability;
+        gameObject.SetActive(false);
     }
 }

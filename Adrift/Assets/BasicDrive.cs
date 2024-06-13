@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.Windows;
@@ -33,6 +34,12 @@ public class BasicDrive : MonoBehaviour
     public float currVelocity = 0.0f;
 
     private Rigidbody rb;
+
+
+    [Header("Audio")]
+    public AudioMixer engineAudio;
+    private float vol;
+
 
     // Start is called before the first frame update
     void Start()
@@ -104,6 +111,20 @@ public class BasicDrive : MonoBehaviour
             rb.velocity = Vector3.zero;
             gameObject.isStatic = true;
         }
+
+
+
+
+        //handle audio
+        if (sitting)
+        {
+            vol = rb.velocity.magnitude - 20f;
+            engineAudio.SetFloat("EngineSound", vol);
+        }
+        else
+        {
+            engineAudio.SetFloat("EngineSound", -30f);
+        }
     }
 
 
@@ -112,6 +133,9 @@ public class BasicDrive : MonoBehaviour
         if (!sitting)
         {
             gameObject.isStatic = false;
+
+            //engineAudioSource1.Play();
+            //engineAudioSource2.Play();
 
             //player.transform.parent = null;
 

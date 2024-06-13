@@ -37,7 +37,7 @@ public class RepairGun : MonoBehaviour
                             currPart.GetComponent<ShipPart>().repairing = false;
                         }
 
-                        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                        //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
 
                         //set what part we are currently fixing
                         currPart = hit.collider.gameObject;

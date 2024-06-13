@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fractured: {fileID: 4431163409800634606, guid: 0ff42f37aee0fec44bcd79763ae4f92f, type: 3}
+  fracturedEffect: {fileID: 2903667648820879087, guid: 72db223a8c36c1e4688e37f6809c2485, type: 3}
 --- !u!64 &8663288680691020475
 MeshCollider:
   m_ObjectHideFlags: 0
