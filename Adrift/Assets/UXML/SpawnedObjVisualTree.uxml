@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="Pane1" style="flex-grow: 1;">
+        <ui:Label tabindex="-1" text="Object Setup" display-tooltip-when-elided="true" name="Header" style="display: flex; flex-direction: column; flex-wrap: nowrap; font-size: 14px; -unity-font-style: bold;" />
+        <uie:PropertyField name="Availability" binding-path="available" />
+        <uie:PropertyField binding-path="Type" name="type" />
+        <ui:EnumField label="Object Type" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" binding-path="type" name="type" />
+        <uie:PropertyField binding-path="Type" name="Durability" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Pane2" style="flex-grow: 1; padding-top: 10px; padding-bottom: 5px; padding-left: 1px; padding-right: 1px;">
+        <ui:Label tabindex="-1" text="Value" display-tooltip-when-elided="true" name="Header" style="display: flex; flex-direction: column; flex-wrap: nowrap; font-size: 14px; -unity-font-style: bold; padding-bottom: 5px;" />
+        <uie:PropertyField name="ToggleBool" binding-path="randomiseValue" label="Randomise value?" />
+        <ui:VisualElement name="SetVals" style="flex-grow: 1; padding-right: 10px; padding-left: 10px;">
+            <ui:FloatField label="Value" value="0" binding-path="value" name="SetVal" />
+        </ui:VisualElement>
+        <ui:VisualElement name="RandomVals" style="flex-grow: 1; padding-right: 10px; padding-left: 10px;">
+            <ui:FloatField label="Min Value" value="10" name="MinVal" />
+            <ui:FloatField label="Max Value" value="20" name="MaxVal" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3436817826054681021}
   - component: {fileID: 2129975380213719598}
   - component: {fileID: -750010128339120958}
+  - component: {fileID: -6252345557549101325}
   m_Layer: 0
   m_Name: Rock10
   m_TagString: SpawnedObject
@@ -171,3 +172,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 14
   m_CollisionDetection: 1
+--- !u!114 &-6252345557549101325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6549293077901927804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff2c36f25e97cc14ea3d882e22d32545, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  available: 1
+  type: 1
+  durability: 10
+  currDurability: 0
+  randomiseValue: 0
+  value: 5
+  minVal: 0
+  maxVal: 0

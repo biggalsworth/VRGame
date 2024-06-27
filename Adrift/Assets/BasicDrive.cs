@@ -19,15 +19,20 @@ public class BasicDrive : MonoBehaviour
 
     private bool sitting = false;
 
-    [Header("Levers")]
+    [Header("Data Input")]
     public GameObject throttle;
     public GameObject rotation;
     public Slider throttleSlider;
+
+    public Button Ascension;
+    public Selectable Descension;
 
     private float rotationSpeed = 1.5f;
 
     private float currThrottle;
     private float currRotation;
+
+    //private Bonuses bonuses;
 
     public TextMeshProUGUI speedTracker;
     [HideInInspector]
@@ -82,18 +87,18 @@ public class BasicDrive : MonoBehaviour
                 currRotation = rotation.GetComponent<ShipMovment>().rot;
 
                 //if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude) <= Math.Abs(currThrottle))
-                if (Math.Abs(currThrottle) > 0.1f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
+                if (Math.Abs(currThrottle) > 0.5f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
                 {
                     //add forward direction based on seat orientation
                     //make sure to make the throttle increase with the ships allowed speed in ship stats
                     //*1000.0 to counteract the heavy mass
-                    rb.AddForce(seatPos.transform.forward * (currThrottle * GetComponent<ShipStats>().speed) * 1000.0f, ForceMode.Force);
+                    rb.AddForce(seatPos.transform.forward * (currThrottle + GetComponent<ShipStats>().speed * Bonuses.instance.speedBonus) * 760.0f, ForceMode.Force);
                 }
 
 
                 float rotDiff = Mathf.Abs(transform.eulerAngles.y - currRotation);
-                //gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, currRotation, 0), rotationSpeed * Time.deltaTime);
-                gameObject.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, currRotation, 0), Time.deltaTime * rotationSpeed);
+
+                gameObject.transform.rotation = Quaternion.Slerp(seatPos.transform.rotation, Quaternion.Euler(0, currRotation, 0), Time.deltaTime * (rotationSpeed + Bonuses.instance.rotationBonus));
 
             }
             else
@@ -196,7 +201,7 @@ public class BasicDrive : MonoBehaviour
             vel.x = 0;
             rb.velocity = vel;
             */
-            rb.MovePosition(transform.position + (seatPos.up * force) * Time.deltaTime);
+            //rb.MovePosition(transform.position + (seatPos.up * force) * Time.deltaTime);
         }
     }
     

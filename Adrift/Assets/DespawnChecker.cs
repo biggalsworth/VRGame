@@ -23,8 +23,7 @@ public class DespawnChecker : MonoBehaviour
     {
         if (other.gameObject.tag == "SpawnedObject")
         {
-            other.gameObject.GetComponent<SpawnedObjClass>().available = true;
-            other.gameObject.SetActive(false);
+            other.gameObject.GetComponent<SpawnedObjClass>().Available();
         }
     }
 }

@@ -19,6 +19,7 @@ public class ShipStats : MonoBehaviour
     public float maxStorage;
     [HideInInspector]
     public float shipStorage;
+    public float cargoValue;
 
     public float speed = 1.5f;
 
@@ -32,7 +33,7 @@ public class ShipStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        shipHealth = 20;
+        shipHealth = maxHealth;
         CodeRedActive = false;
     }
 
@@ -56,14 +57,14 @@ public class ShipStats : MonoBehaviour
         {
             if(damageSeverity == 0)
             {
-                Debug.Log("SEVERE 1");
+                //Debug.Log("SEVERE 1");
 
                 damageSeverity = 1;
                 shipDamageHandler.BreakPart();
             }
             if(shipHealth < 30 && damageSeverity < 2)
             {
-                Debug.Log("SEVERE 2");
+                //Debug.Log("SEVERE 2");
 
                 damageSeverity = 2; 
                 shipDamageHandler.BreakPart();

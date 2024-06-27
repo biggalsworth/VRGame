@@ -26,7 +26,6 @@ public class PartsHandler : MonoBehaviour
             GameObject part = Parts[i];
             if (part.GetComponent<ShipPart>().currHealth >= part.GetComponent<ShipPart>().partHealth)
             {
-                Debug.Log("Break part" + i);
                 part.GetComponent<ShipPart>().Break();
                 break;
             }

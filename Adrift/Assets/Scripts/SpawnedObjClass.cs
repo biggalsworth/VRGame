@@ -20,10 +20,22 @@ public class SpawnedObjClass : MonoBehaviour
     [HideInInspector]
     public float currDurability;
 
+    public bool randomiseValue = false;
+    public float value = 200f;
+    public float minVal = 10f;
+    public float maxVal = 20f;
+                    
+
     private void Start()
     {
         currDurability = durability;
         ship = GameObject.FindGameObjectWithTag("ShipParent");
+
+        if (randomiseValue)
+        {
+            value = Random.Range(minVal, maxVal);
+        }
+
     }
 
     // Update is called once per frame
@@ -37,10 +49,12 @@ public class SpawnedObjClass : MonoBehaviour
 
         if(currDurability <= 0)
         {
-            if(type == ObjectType.Asteroid)
+            ship.GetComponent<ShipStats>().cargoValue += value;
+
+            if (type == ObjectType.Asteroid)
             {
                 ship.GetComponent<ShipStats>().GainItems(5.0f);
-                GetComponent<Fracture>().FractureObject();
+                gameObject.GetComponent<Fracture>().FractureObject();
             }
             else
             {
@@ -62,4 +76,14 @@ public class SpawnedObjClass : MonoBehaviour
         currDurability = durability;
         gameObject.SetActive(false);
     }
+
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name != "CollisionChecker" && other.gameObject.layer == LayerMask.NameToLayer("Ship") && other.tag != "Ignore")
+        {
+            Available();
+        }
+    }
+    
 }
