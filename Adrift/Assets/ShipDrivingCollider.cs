@@ -34,5 +34,9 @@ public class ShipDrivingCollider : MonoBehaviour
                 ship.TakeDamage(10f);
             }
         }
+        if (other.gameObject.tag == "Enemy")
+        {
+            other.GetComponent<EnemyShipStats>().TakeDamage(10f);
+        }
     }
 }

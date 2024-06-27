@@ -17,7 +17,8 @@ public class BasicDrive : MonoBehaviour
 
     public InputActionReference dismountButton;
 
-    private bool sitting = false;
+    [HideInInspector]
+    public bool sitting = false;
 
     [Header("Data Input")]
     public GameObject throttle;
@@ -92,7 +93,7 @@ public class BasicDrive : MonoBehaviour
                     //add forward direction based on seat orientation
                     //make sure to make the throttle increase with the ships allowed speed in ship stats
                     //*1000.0 to counteract the heavy mass
-                    rb.AddForce(seatPos.transform.forward * (currThrottle + GetComponent<ShipStats>().speed * Bonuses.instance.speedBonus) * 760.0f, ForceMode.Force);
+                    rb.AddForce(seatPos.transform.forward * (currThrottle + GetComponent<ShipStats>().speed) * 950.0f, ForceMode.Force);
                 }
 
 

@@ -14,11 +14,16 @@ public class BulletScript : MonoBehaviour
 
     public GameObject deathEffect;
 
+    IEnumerator lifeFunc;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * speed, ForceMode.Impulse);
+        rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
+
+        lifeFunc = countdown();
+        StartCoroutine(lifeFunc);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,12 +36,20 @@ public class BulletScript : MonoBehaviour
         if(other.tag == "Enemy")
         {
             destroyBullet();
-            other.GetComponent<EnemyVital>().RecieveDamage(damage);
+            if (other.GetComponent<EnemyVital>() != null)
+            {
+                other.GetComponent<EnemyVital>().RecieveDamage(damage);
+            }
+            else
+            {
+                other.GetComponent<EnemyShipStats>().TakeDamage(damage);
+            }
         }
     }
 
     public void destroyBullet()
     {
+        StopCoroutine(lifeFunc);
         Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

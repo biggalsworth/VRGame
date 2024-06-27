@@ -2640,6 +2640,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "ShipCombat",
+            "id": "d6e16841-f982-4d89-ad61-c12519738623",
+            "actions": [
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "ad305c6c-5c00-444e-b099-a8fb36d1e892",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4a9bc930-31d2-434a-96a0-f2d23fd0e2c7",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

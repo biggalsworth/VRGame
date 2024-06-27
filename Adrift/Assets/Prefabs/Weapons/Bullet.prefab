@@ -298,6 +298,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  speed: 20
-  lifetime: 10
+  speed: 30
+  lifetime: 5
   deathEffect: {fileID: 4685694212979438835, guid: 36f4e9dd987803840980a01dc738dc37, type: 3}

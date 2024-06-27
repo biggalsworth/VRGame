@@ -39,7 +39,7 @@ public class Bonuses : MonoBehaviour
     {
         int newbonus;
 
-        speedBonus = ((Convert.ToInt32(bonuses[0])) * 2f) - 1f;
+        speedBonus = ((Convert.ToInt32(bonuses[0]) - 1) * 20f);
         engineLevel = Convert.ToInt32(bonuses[0]);
         // -- ROTATION BONUS --
 
