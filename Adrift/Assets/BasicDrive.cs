@@ -93,7 +93,7 @@ public class BasicDrive : MonoBehaviour
                     //add forward direction based on seat orientation
                     //make sure to make the throttle increase with the ships allowed speed in ship stats
                     //*1000.0 to counteract the heavy mass
-                    rb.AddForce(seatPos.transform.forward * (currThrottle + GetComponent<ShipStats>().speed) * 950.0f, ForceMode.Force);
+                    rb.AddForce(seatPos.transform.forward * (currThrottle + GetComponent<ShipStats>().speed) * 1000.0f, ForceMode.Force);
                 }
 
 
@@ -158,6 +158,8 @@ public class BasicDrive : MonoBehaviour
 
             //make sure the rigidbody can move
             rb.constraints = RigidbodyConstraints.None;
+            rb.velocity = Vector3.zero;
+
             //rb.constraints = RigidbodyConstraints.FreezeRotationX;
             //rb.constraints = RigidbodyConstraints.FreezeRotationZ;
             //rb.constraints = RigidbodyConstraints.FreezePositionY;

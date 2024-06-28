@@ -14,60 +14,69 @@ public class JumpDrive : MonoBehaviour
     public GameObject spawner;
 
     public TextMeshProUGUI warningTextBox;
+    public TextMeshProUGUI SpeedValueText;
 
     BasicDrive driveScript;
 
     bool jumping = false;
 
-    public string sceneToLoad;
+    public string sceneToLoad = "";
 
     // Start is called before the first frame update
     void Start()
     {
-        sceneToLoad = "";
+        jumping = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (jumping)
+        {
+            gameObject.isStatic = true;
+            SpeedValueText.text = "5.675 Mil";
 
+        }
     }
 
     public void StartJump()
     {
         if(jumping == false)
         {
-            jumping = true;
-            StartCoroutine(Jump());
+            if (sceneToLoad == "")
+            {
+                Debug.Log(sceneToLoad);
+                warningTextBox.text = "No destination has been chosen";
+            }
+            else
+            {
+                if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName(sceneToLoad))
+                {
+                    warningTextBox.text = "Already in this system";
+                }
+                else
+                {
+                    StartCoroutine(Jump());
+                }
+            }
         }
     }
 
     IEnumerator Jump()
     {
-        if (sceneToLoad == "")
-        {
-            warningTextBox.text = "No destination has been chosen";
-            yield return new WaitForSeconds(0.01f);
-        }
-        else
-        {
-            if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName(sceneToLoad))
-            {
-                warningTextBox.text = "Already in this system";
-            }
-            else
-            {
-                spawner.SetActive(false);
-                gameObject.isStatic = true;
-                portalAnim.Play("open");
-                yield return new WaitForSeconds(5f);
-                sceneLoader.NextScene(sceneToLoad);
-            }
-        }
+        jumping = true;
+        spawner.SetActive(false);
+        gameObject.isStatic = true;
+        portalAnim.Play("open");
+        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(5f);
+        sceneLoader.NextScene(sceneToLoad);
     }
 
     public void SelectLocation(string name)
     {
+        Debug.Log("Selected");
         sceneToLoad = name;
+        Debug.Log("Travel to " + sceneToLoad);
     }
 }

@@ -144,7 +144,7 @@ public class ScreenManager : MonoBehaviour
         }
         if(screenId == (int)ScreenType.Travel)
         {
-            if(currScreen != RadioPanel)
+            if(currScreen != TravelPanel)
             {
                 Debug.Log("ShowTravel");
                 currScreen.SetActive(false);
