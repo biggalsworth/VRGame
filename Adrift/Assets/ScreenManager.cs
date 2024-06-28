@@ -8,7 +8,8 @@ public enum ScreenType
 {
     Stats,
     Weapons,
-    Radio
+    Radio,
+    Travel
 }
 
 public class ScreenManager : MonoBehaviour
@@ -41,6 +42,10 @@ public class ScreenManager : MonoBehaviour
     public AudioSource soundControl;
     public List<AudioClip> music;
     public Slider volume;
+
+    [Header("Travel")]
+    public GameObject TravelPanel;
+
 
 
 
@@ -135,6 +140,16 @@ public class ScreenManager : MonoBehaviour
                 currScreen.SetActive(false);
                 currScreen = RadioPanel;
                 RadioPanel.SetActive(true);
+            }
+        }
+        if(screenId == (int)ScreenType.Travel)
+        {
+            if(currScreen != RadioPanel)
+            {
+                Debug.Log("ShowTravel");
+                currScreen.SetActive(false);
+                currScreen = TravelPanel;
+                TravelPanel.SetActive(true);
             }
         }
     }

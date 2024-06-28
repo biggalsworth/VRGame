@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Practice/Weapons.unity
     guid: 5d25405a07fee1f4eac957df7a8f6888
+  - enabled: 1
+    path: Assets/Scenes/RedSpace.unity
+    guid: 1927b22c10498954db56fd47fe359c20
+  - enabled: 1
+    path: Assets/Scenes/Station.unity
+    guid: ccb7c3563e8511e45b0d994c3f6822c5
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 4aff3f2c5bfff4e4a8229f1bb83d3224, type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 10f4fcc9ee260f04eb56e81d0d2acf69, type: 2}

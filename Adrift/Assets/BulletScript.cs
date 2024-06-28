@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-
     private Rigidbody rb;
+
+    public bool isEnemyBullet = false;
 
     public float damage = 10.0f;
     public float speed = 5.0f;
@@ -28,21 +29,35 @@ public class BulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag != "Player" && other.tag != "Ignore")
+        if (!isEnemyBullet)
         {
-            Debug.Log(other.transform.name);
-            destroyBullet();
-        }
-        if(other.tag == "Enemy")
-        {
-            destroyBullet();
-            if (other.GetComponent<EnemyVital>() != null)
+            if (other.tag != "Player" && other.tag != "Ignore")
             {
-                other.GetComponent<EnemyVital>().RecieveDamage(damage);
+                Debug.Log(other.transform.name);
+                destroyBullet();
             }
-            else
+            if (other.tag == "Enemy")
             {
-                other.GetComponent<EnemyShipStats>().TakeDamage(damage);
+                destroyBullet();
+                if (other.GetComponent<EnemyVital>() != null)
+                {
+                    other.GetComponent<EnemyVital>().RecieveDamage(damage);
+                }
+                else
+                {
+                    other.GetComponent<EnemyShipStats>().TakeDamage(damage);
+                }
+            }
+        }
+        else
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Ship"))
+            {
+                destroyBullet();
+                if (GameObject.Find("Ship").GetComponent<ShipStats>() != null)
+                {
+                    GameObject.Find("Ship").GetComponent<ShipStats>().TakeDamage(damage);
+                }
             }
         }
     }

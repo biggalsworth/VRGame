@@ -137,8 +137,10 @@ public class ShipStats : MonoBehaviour
     public IEnumerator Heal()
     {
         canHeal = false;
-
-        shipHealth += 2.0f;
+        if (shipHealth < maxHealth)
+        {
+            shipHealth += 2.0f;
+        }
 
         yield return new WaitForSeconds(5f);
 

@@ -153,6 +153,10 @@ public class EnemyShipAI : MonoBehaviour
                 transform.LookAt(target.position);
                 //rb.AddForce(-transform.forward * speed, ForceMode.Impulse);
             }
+            else
+            {
+                GetComponent<EnemyShipCombat>().Shoot();
+            }
 
             Debug.Log("ENEMY FIRES");
         }

@@ -14,6 +14,8 @@ public class ObjectGeneration : MonoBehaviour
 
     public List<GameObject> objects;
 
+    public bool canSpawn = true;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +28,7 @@ public class ObjectGeneration : MonoBehaviour
 // Update is called once per frame
 void Update()
     {
-        if (shipStats.currVelocity > 1f)
+        if (shipStats.currVelocity > 1f && canSpawn)
         {
             if (Random.Range(0, 1) <= asteroidProbability)
             {
