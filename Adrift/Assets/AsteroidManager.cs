@@ -45,7 +45,6 @@ public class AsteroidManager : MonoBehaviour
             GameObject tempRoid = asteroids[i];
             if (tempRoid.GetComponent<SpawnedObjClass>().available)
             {
-                //GameObject tempRoid = asteroids[index];
                 asteroids.RemoveAt(i);
                 asteroids.Add(tempRoid);
 

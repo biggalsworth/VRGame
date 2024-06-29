@@ -7,6 +7,8 @@ public class EnemyShipStats : MonoBehaviour
     public int maxHealth;
     float health;
 
+    [HideInInspector]
+    public bool dead = false;
 
 
 
@@ -19,9 +21,10 @@ public class EnemyShipStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0)
+        if (health <= 0 && !dead)
         {
-            Destruct();
+            dead = true;
+            StartCoroutine(Destruct());
         }
     }
 
@@ -30,9 +33,13 @@ public class EnemyShipStats : MonoBehaviour
         health -= damage;
     }
 
-    public void Destruct()
+    public IEnumerator Destruct()
     {
-        Destroy(gameObject);
+        GetComponent<SpawnedObjClass>().durability = 0f;
+        GetComponent<Animator>().Play("Destroy");
+        yield return new WaitForSeconds(2f);
+        GetComponent<SpawnedObjClass>().Available();
+
     }
 
 

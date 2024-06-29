@@ -28,7 +28,7 @@ public class EnemyShipAI : MonoBehaviour
     public float leapSpeed = 5f;
     public float maxWanderSpeed = 20f;
 
-    public float detectionRange = 45f;
+    public float detectionRange = 65f;
 
     // Start is called before the first frame update
     void Awake()
@@ -61,7 +61,7 @@ public class EnemyShipAI : MonoBehaviour
                 rb.AddForce(transform.forward * speed, ForceMode.Force);
             }
 
-            if (angleToPlayer < detectionRange)
+            if (angleToPlayer < detectionRange && Vector3.Distance(target.position, gameObject.transform.position) < 50f)
             {
                 state = EnemyState.engaging;
             }

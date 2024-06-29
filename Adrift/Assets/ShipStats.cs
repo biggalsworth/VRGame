@@ -89,7 +89,7 @@ public class ShipStats : MonoBehaviour
     }
 
 
-    public void GainItems(float amount)
+    public void GainItems(float amount, float value)
     {
         if(shipStorage + amount <= maxStorage)
         {
@@ -102,6 +102,7 @@ public class ShipStats : MonoBehaviour
                 if(shipStorage >= maxStorage)
                 {
                     shipStorage = maxStorage;
+                    break;
                 }
                 else
                 {
@@ -109,6 +110,8 @@ public class ShipStats : MonoBehaviour
                 }
             }
         }
+
+        cargoValue += value;
     }
 
     public void CodeRed(bool danger)

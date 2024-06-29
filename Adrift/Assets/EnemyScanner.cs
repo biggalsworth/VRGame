@@ -41,7 +41,7 @@ public class EnemyScanner : MonoBehaviour
                 }
                 else
                 {
-                    tempPos = (scanned.transform.position - newZero) * 0.05f;
+                    tempPos = (scanned.transform.position - newZero) * 0.025f;
                     tempEnemy = Instantiate(enemyIcon, tempPos, Quaternion.identity, gameObject.transform);
                     tempEnemy.transform.localPosition = tempPos;
                     enemyIcons.Add(tempEnemy);

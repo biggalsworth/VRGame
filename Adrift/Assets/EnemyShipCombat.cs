@@ -12,6 +12,8 @@ public class EnemyShipCombat : MonoBehaviour
 
     bool canShoot = true;
 
+    public EnemyBulletManager bulletSupply;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +29,12 @@ public class EnemyShipCombat : MonoBehaviour
 
     public void Shoot()
     {
-        if (canShoot)
+        if (canShoot && GetComponent<EnemyShipStats>().dead == false)
         {
-            Instantiate(bullet, shootPoint.position, shootPoint.rotation, null).GetComponent<Rigidbody>().velocity = rb.velocity;
+            GameObject currBullet = bulletSupply.GetBullet();
+            currBullet.transform.position = shootPoint.position;
+            currBullet.transform.rotation = shootPoint.rotation;
+            currBullet.GetComponent<Rigidbody>().velocity = rb.velocity;
             StartCoroutine(ShotDelay());
         }
     }

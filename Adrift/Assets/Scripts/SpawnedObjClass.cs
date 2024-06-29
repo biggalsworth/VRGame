@@ -5,7 +5,8 @@ using UnityEngine;
 public enum ObjectType
 {
     None,
-    Asteroid
+    Asteroid,
+    EnemyShip
 }
 
 public class SpawnedObjClass : MonoBehaviour
@@ -24,6 +25,7 @@ public class SpawnedObjClass : MonoBehaviour
     public float value = 200f;
     public float minVal = 10f;
     public float maxVal = 20f;
+    public float weight = 10f;
                     
 
     private void Start()
@@ -41,20 +43,24 @@ public class SpawnedObjClass : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(ship.transform.position, transform.position) > 200)
+        if (Vector3.Distance(ship.transform.position, transform.position) > 250)
         {
             available = true;
-            gameObject.SetActive(false);
+            Available();
         }
 
-        if(currDurability <= 0)
+        if (currDurability <= 0)
         {
             ship.GetComponent<ShipStats>().cargoValue += value;
 
             if (type == ObjectType.Asteroid)
             {
-                ship.GetComponent<ShipStats>().GainItems(5.0f);
+                ship.GetComponent<ShipStats>().GainItems(weight, value);
                 gameObject.GetComponent<Fracture>().FractureObject();
+            }
+            else if (type == ObjectType.EnemyShip)
+            {
+                ship.GetComponent<ShipStats>().GainItems(weight, value);
             }
             else
             {

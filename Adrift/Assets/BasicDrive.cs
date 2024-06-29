@@ -47,9 +47,10 @@ public class BasicDrive : MonoBehaviour
     private float vol;
 
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        dismountButton.action.performed += dismount;
+
         sitting = false;
 
         rb = GetComponent<Rigidbody>();
@@ -59,11 +60,6 @@ public class BasicDrive : MonoBehaviour
         //attach the player to the ship
         //player.transform.parent = gameObject.transform;
 
-    }
-
-    private void Awake()
-    {
-        dismountButton.action.performed += dismount;
     }
 
     private void OnEnable()
@@ -136,6 +132,8 @@ public class BasicDrive : MonoBehaviour
 
     public void Sit()
     {
+        rb = GetComponent<Rigidbody>();
+
         if (!sitting)
         {
             gameObject.isStatic = false;
@@ -192,20 +190,6 @@ public class BasicDrive : MonoBehaviour
         }
         
         
-    }
-
-    public void ChangeAltitude(float force)
-    {
-        if (sitting && gameObject.GetComponent<ShipStats>().shipHealth > 10)
-        {
-            /*
-            //reset velocity
-            Vector3 vel = rb.velocity;
-            vel.x = 0;
-            rb.velocity = vel;
-            */
-            //rb.MovePosition(transform.position + (seatPos.up * force) * Time.deltaTime);
-        }
     }
     
     private void dismount(InputAction.CallbackContext context)

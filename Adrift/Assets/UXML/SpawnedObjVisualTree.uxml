@@ -6,7 +6,7 @@
         <ui:EnumField label="Object Type" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" binding-path="type" name="type" />
         <uie:PropertyField binding-path="Type" name="Durability" />
     </ui:VisualElement>
-    <ui:VisualElement name="Pane2" style="flex-grow: 1; padding-top: 10px; padding-bottom: 5px; padding-left: 1px; padding-right: 1px;">
+    <ui:VisualElement name="Rewards" style="flex-grow: 1; padding-top: 10px; padding-bottom: 5px; padding-left: 1px; padding-right: 1px;">
         <ui:Label tabindex="-1" text="Value" display-tooltip-when-elided="true" name="Header" style="display: flex; flex-direction: column; flex-wrap: nowrap; font-size: 14px; -unity-font-style: bold; padding-bottom: 5px;" />
         <uie:PropertyField name="ToggleBool" binding-path="randomiseValue" label="Randomise value?" />
         <ui:VisualElement name="SetVals" style="flex-grow: 1; padding-right: 10px; padding-left: 10px;">
@@ -15,6 +15,10 @@
         <ui:VisualElement name="RandomVals" style="flex-grow: 1; padding-right: 10px; padding-left: 10px;">
             <ui:FloatField label="Min Value" value="10" name="MinVal" />
             <ui:FloatField label="Max Value" value="20" name="MaxVal" />
+        </ui:VisualElement>
+        <ui:Label tabindex="-1" text="Weight" display-tooltip-when-elided="true" name="WeightTitle" style="display: flex; flex-direction: column; flex-wrap: nowrap; font-size: 14px; -unity-font-style: bold; padding-bottom: 5px;" />
+        <ui:VisualElement name="Weight" style="flex-grow: 1; padding-right: 10px; padding-left: 10px;">
+            <ui:FloatField label="Weight" value="10" name="Weight" binding-path="weight" tooltip="How many items the ship storage is increased by." />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
