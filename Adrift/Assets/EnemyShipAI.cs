@@ -61,7 +61,7 @@ public class EnemyShipAI : MonoBehaviour
                 rb.AddForce(transform.forward * speed, ForceMode.Force);
             }
 
-            if (angleToPlayer < detectionRange && Vector3.Distance(target.position, gameObject.transform.position) < 50f)
+            if (angleToPlayer < detectionRange && Vector3.Distance(target.position, gameObject.transform.position) < 70f)
             {
                 state = EnemyState.engaging;
             }
@@ -113,7 +113,7 @@ public class EnemyShipAI : MonoBehaviour
                                 }
                                 break;
 
-                            case 3:
+                            case 2:
                                 if (target.position.y > transform.position.y)
                                 {
                                     rb.AddForce(-transform.up * leapSpeed/2, ForceMode.Impulse);

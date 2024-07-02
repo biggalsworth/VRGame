@@ -23,20 +23,22 @@ public class SceneMaster : MonoBehaviour
 
     public void NextScene(string name)
     {
-        dataManager.Save();
-        SceneManager.LoadScene(name, LoadSceneMode.Single);
-        if(dataManager != null)
-        {
-            dataManager.Save();
-        }
-    }
-
-    public void NextScene(int sceneId)
-    {
-        SceneManager.LoadScene(sceneId, LoadSceneMode.Single);
         if (dataManager != null)
         {
             dataManager.Save();
         }
+
+        SceneManager.LoadScene(name, LoadSceneMode.Single);
+    }
+
+    public void NextScene(int sceneId)
+    {
+        if (dataManager != null)
+        {
+            dataManager.Save();
+        }
+
+        SceneManager.LoadScene(sceneId, LoadSceneMode.Single);
+       
     }
 }

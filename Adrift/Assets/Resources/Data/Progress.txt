@@ -1,3 +1,7 @@
-53: Engine
-53: Stabilisers
-53: Shield
+1: Engine
+1: Stabilisers
+1: Shield
+0: Storage
+0: Value
+100: Health
+0: Wealth

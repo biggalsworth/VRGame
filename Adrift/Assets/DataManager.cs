@@ -8,7 +8,7 @@ using System;
 public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
-    Bonuses bonuses;
+    Bonuses data;
 
     //Data Text
     string path = "Assets/Resources/Data/Progress.txt";
@@ -18,14 +18,18 @@ public class DataManager : MonoBehaviour
 
     string progressFormat = String.Format(@"{0}: Engine
 {1}: Stabilisers
-{2}: Shield", 1, 1, 1);
+{2}: Shield
+{3}: Storage
+{4}: Value
+{5}: Health
+{6}: Wealth", 1, 1, 1, 0, 0, 100, 0);
 
     #endregion
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
-        bonuses = gameObject.GetComponent<Bonuses>();
+        data = gameObject.GetComponent<Bonuses>();
 
         Load();
     }
@@ -43,12 +47,24 @@ public class DataManager : MonoBehaviour
             return;
         }
         string[] levels = File.ReadAllLines(path);
-        string loadedlevels = "";
+        List<string> loadedData = new List<string>();
         foreach (string level in levels)
         {
-            loadedlevels = loadedlevels+level[0];
+            string tempData = "";
+            foreach(char c in level)
+            {
+                if (c != ':')
+                {
+                    tempData = tempData + c;
+                }
+                else
+                {
+                    loadedData.Add(tempData);
+                    break;
+                }
+            }
         }
-        bonuses.UpdateBonuses(loadedlevels);
+        data.UpdateBonuses(loadedData);
     }
 
     [MenuItem("Tools/Save file")]
@@ -57,7 +73,11 @@ public class DataManager : MonoBehaviour
 
         progressFormat = String.Format(@"{0}: Engine
 {1}: Stabilisers
-{2}: Shield", bonuses.engineLevel, bonuses.stabiliserLevel, bonuses.shieldLevel);
+{2}: Shield
+{3}: Storage
+{4}: Value
+{5}: Health
+{6}: Wealth", data.engineLevel.ToString(), data.stabiliserLevel.ToString(), data.shieldLevel.ToString(), data.storageCount.ToString(), data.currValue.ToString(), data.currHealth.ToString(), data.currWealth.ToString());
 
         //Write some text to the test.txt file
         StreamWriter writer = new StreamWriter(path, false);

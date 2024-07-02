@@ -20,6 +20,7 @@ public class ShipStats : MonoBehaviour
     [HideInInspector]
     public float shipStorage;
     public float cargoValue;
+    public float currentWealth;
 
     public float speed = 1.5f;
 
@@ -33,7 +34,7 @@ public class ShipStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        shipHealth = maxHealth;
+        //shipHealth = maxHealth;
         CodeRedActive = false;
     }
 

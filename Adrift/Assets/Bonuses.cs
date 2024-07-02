@@ -19,6 +19,12 @@ public class Bonuses : MonoBehaviour
     [HideInInspector]
     public int shieldLevel = 1;
 
+    public float storageCount;
+    public float currValue;
+
+    public float currHealth;
+    public float currWealth;
+
 
     public ShipStats shipStats;
 
@@ -32,10 +38,14 @@ public class Bonuses : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        currValue = shipStats.cargoValue;
+        storageCount = shipStats.shipStorage;
+
+        currHealth = shipStats.shipHealth;
+        currWealth = shipStats.currentWealth;
     }
 
-    public void UpdateBonuses(string bonuses)
+    public void UpdateBonuses(List<string> bonuses)
     {
         int newbonus;
 
@@ -100,5 +110,14 @@ public class Bonuses : MonoBehaviour
             shipStats.maxHealth = 100f + shieldBonus;
         }
 
+        storageCount = Convert.ToInt32(bonuses[3]);
+        currValue = Convert.ToInt32(bonuses[4]);
+        currHealth = Convert.ToInt32(bonuses[5]);
+        currWealth = Convert.ToInt32(bonuses[6]);
+
+        shipStats.shipStorage = storageCount;
+        shipStats.cargoValue = currValue;
+        shipStats.shipHealth = currHealth;
+        shipStats.currentWealth = currWealth;
     }
 }
