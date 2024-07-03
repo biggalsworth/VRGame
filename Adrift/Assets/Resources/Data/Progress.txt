@@ -4,4 +4,4 @@
 0: Storage
 0: Value
 100: Health
-0: Wealth
+10: Wealth

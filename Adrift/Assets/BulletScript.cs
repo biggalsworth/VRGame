@@ -64,6 +64,7 @@ public class BulletScript : MonoBehaviour
 
     public void destroyBullet()
     {
+        rb.velocity = Vector3.zero;
         StopCoroutine(lifeFunc);
         Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);

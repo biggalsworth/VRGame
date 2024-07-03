@@ -42,6 +42,10 @@ public class SeatControllerInput : MonoBehaviour
     {
         if (player != null)
         {
+            if (ship.sitting)
+            {
+                player = null;
+            }
             ship.Sit();
         }
     }

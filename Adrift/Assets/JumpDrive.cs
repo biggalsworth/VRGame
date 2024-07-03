@@ -18,9 +18,13 @@ public class JumpDrive : MonoBehaviour
 
     BasicDrive driveScript;
 
-    bool jumping = false;
+    [HideInInspector]
+    public bool jumping = false;
 
     public string sceneToLoad = "";
+
+    public List<AudioSource> engineSources = new List<AudioSource>();
+    public AudioClip JumpSound;
 
     // Start is called before the first frame update
     void Start()
@@ -67,8 +71,14 @@ public class JumpDrive : MonoBehaviour
         jumping = true;
         spawner.SetActive(false);
         gameObject.isStatic = true;
+        foreach (AudioSource source in engineSources)
+        {
+            source.volume = 1;
+            source.clip = JumpSound;
+            source.Play();
+        }
+        yield return new WaitForSeconds(1f);
         portalAnim.Play("open");
-        yield return new WaitForSeconds(1.5f);
         yield return new WaitForSeconds(5f);
         sceneLoader.NextScene(sceneToLoad);
     }

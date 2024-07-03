@@ -30,6 +30,11 @@ public class EnemyShipAI : MonoBehaviour
 
     public float detectionRange = 65f;
 
+    private void Start()
+    {
+        StartCoroutine(loop());
+    }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -38,127 +43,130 @@ public class EnemyShipAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    IEnumerator loop()
     {
-
-        if(Vector3.Distance(target.position, transform.position) > dist && state != EnemyState.wandering)
+        while (true)
         {
-            state = EnemyState.engaging;
-        }
+            yield return new WaitForSeconds(0.5f);
 
-
-        target = GameObject.Find("Ship").transform;
-        targetFront = target.position + target.transform.forward * 20f;
-        Vector3 playerDir = target.position - transform.position;
-        // how far is the angle of the player relevant to our current sight
-        float angleToPlayer = Vector3.Angle(transform.forward, playerDir);
-
-
-        if (state == EnemyState.wandering)
-        {
-            if(rb.velocity.magnitude < maxWanderSpeed)
-            {
-                rb.AddForce(transform.forward * speed, ForceMode.Force);
-            }
-
-            if (angleToPlayer < detectionRange && Vector3.Distance(target.position, gameObject.transform.position) < 70f)
+            if (Vector3.Distance(target.position, transform.position) > dist && state != EnemyState.wandering)
             {
                 state = EnemyState.engaging;
             }
-        }
 
-        if(state == EnemyState.engaging)
-        {
-            Debug.Log("ENGAGING");
-            RaycastHit hit;
-            transform.LookAt(target.position);
-
-            Vector3 playerSight = transform.position - target.position;
-
+            target = GameObject.Find("Ship").transform;
+            targetFront = target.position + target.transform.forward * 15f;
+            Vector3 playerDir = target.position - transform.position;
             // how far is the angle of the player relevant to our current sight
-            float angleToEnemy = Vector3.Angle(target.transform.forward, playerSight);
+            float angleToPlayer = Vector3.Angle(transform.forward, playerDir);
 
-            if (angleToEnemy > 25f)
+
+            if (state == EnemyState.wandering)
             {
-                Debug.Log("Going to the front");
-                transform.LookAt(targetFront + target.transform.forward * 15f);
-                if(rb.velocity.magnitude < maxWanderSpeed * 10)
+                if (rb.velocity.magnitude < maxWanderSpeed)
                 {
-                    rb.AddForce(transform.forward * leapSpeed, ForceMode.Force);
+                    rb.AddForce(transform.forward * speed, ForceMode.Force);
+                }
+
+                if (angleToPlayer < detectionRange && Vector3.Distance(target.position, gameObject.transform.position) < 70f)
+                {
+                    state = EnemyState.engaging;
                 }
             }
-            else
+
+            if (state == EnemyState.engaging)
             {
-                if (Vector3.Distance(transform.position, target.position) > dist)
+                Debug.Log("ENGAGING");
+                RaycastHit hit;
+                transform.LookAt(target.position);
+
+                Vector3 playerSight = transform.position - target.position;
+
+                // how far is the angle of the player relevant to our current sight
+                float angleToEnemy = Vector3.Angle(target.transform.forward, playerSight);
+
+                if (angleToEnemy > 25f)
                 {
-                    if (Random.Range(0, 5) == 0)
+                    Debug.Log("Going to the front");
+                    transform.LookAt(targetFront + target.transform.forward * 15f);
+                    if (rb.velocity.magnitude < maxWanderSpeed * 10)
                     {
-                        switch (Random.Range(0, 14))
-                        {
-                            case 0:
-                                if (angleToPlayer < 0)
-                                {
-                                    rb.AddForce(transform.right * leapSpeed, ForceMode.Impulse);
-                                }
-                                else
-                                {
-                                    rb.AddForce(-transform.right * leapSpeed, ForceMode.Impulse);
-                                }
-                                break;
-
-                            case 1:
-                                if (target.position.y < transform.position.y)
-                                {
-                                    rb.AddForce(transform.up * leapSpeed/2, ForceMode.Impulse);
-                                }
-                                break;
-
-                            case 2:
-                                if (target.position.y > transform.position.y)
-                                {
-                                    rb.AddForce(-transform.up * leapSpeed/2, ForceMode.Impulse);
-                                }
-                                break;
-                        }
+                        rb.AddForce(transform.forward * leapSpeed, ForceMode.Force);
                     }
-                    else
-                    {
-                        transform.LookAt(target.position);
-                        if (rb.velocity.magnitude < maxWanderSpeed)
-                        {
-                            rb.AddForce(transform.forward * speed, ForceMode.Force);
-                        }
-                    }
-
                 }
                 else
                 {
-                    if (rb.velocity.magnitude < maxWanderSpeed * 1.25f)
+                    if (Vector3.Distance(transform.position, target.position) > dist)
                     {
-                        rb.velocity = Vector3.zero;
-                    }
-                    state = EnemyState.attack;
-                    transform.LookAt(targetFront);
+                        if (Random.Range(0, 5) == 0)
+                        {
+                            switch (Random.Range(0, 14))
+                            {
+                                case 0:
+                                    if (angleToPlayer < 0)
+                                    {
+                                        rb.AddForce(transform.right * leapSpeed, ForceMode.Impulse);
+                                    }
+                                    else
+                                    {
+                                        rb.AddForce(-transform.right * leapSpeed, ForceMode.Impulse);
+                                    }
+                                    break;
 
+                                case 1:
+                                    if (target.position.y < transform.position.y)
+                                    {
+                                        rb.AddForce(transform.up * leapSpeed / 2, ForceMode.Impulse);
+                                    }
+                                    break;
+
+                                case 2:
+                                    if (target.position.y > transform.position.y)
+                                    {
+                                        rb.AddForce(-transform.up * leapSpeed / 2, ForceMode.Impulse);
+                                    }
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            transform.LookAt(target.position);
+                            if (rb.velocity.magnitude < maxWanderSpeed)
+                            {
+                                rb.AddForce(transform.forward * speed, ForceMode.Force);
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        if (rb.velocity.magnitude < maxWanderSpeed * 1.25f)
+                        {
+                            rb.velocity = Vector3.zero;
+                        }
+                        state = EnemyState.attack;
+                        transform.LookAt(targetFront);
+
+                    }
                 }
             }
-        }
 
 
-        if(state == EnemyState.attack)
-        {
-            transform.LookAt(target.position);
-            if (Random.Range(0, 20) == 0)
+            if (state == EnemyState.attack)
             {
                 transform.LookAt(target.position);
-                //rb.AddForce(-transform.forward * speed, ForceMode.Impulse);
-            }
-            else
-            {
-                GetComponent<EnemyShipCombat>().Shoot();
-            }
+                if (Random.Range(0, 20) == 0)
+                {
+                    transform.LookAt(target.position);
+                    //rb.AddForce(-transform.forward * speed, ForceMode.Impulse);
+                }
+                else
+                {
+                    GetComponent<EnemyShipCombat>().Shoot();
+                }
 
-            Debug.Log("ENEMY FIRES");
+                Debug.Log("ENEMY FIRES");
+            }
         }
 
     }

@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
 
     public GameObject MenuPanel;
     public GameObject ControlsPanel;
+    public GameObject audioPanel;
 
     public InputActionReference menuButton;
     bool menuActive = false;
@@ -66,6 +67,15 @@ public class MenuManager : MonoBehaviour
                 activePanel.SetActive(false);
                 ControlsPanel.SetActive(true);
                 activePanel = ControlsPanel;
+            }
+        }
+        if(screenID == 2)
+        {
+            if(activePanel != audioPanel)
+            {
+                activePanel.SetActive(false);
+                audioPanel.SetActive(true);
+                activePanel = audioPanel;
             }
         }
     }

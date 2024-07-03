@@ -195,7 +195,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2
@@ -297,6 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2421b6a1abe0f40a1c33efce0a9fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnemyBullet: 0
   damage: 10
   speed: 30
   lifetime: 5
