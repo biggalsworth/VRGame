@@ -38,30 +38,13 @@ public class PlayerSprint : MonoBehaviour
 
     void Update()
     {
-        UpdateInput();
-
         if(RightControllerVelocity.magnitude > 0.5f || LeftControllerVelocity.magnitude > 0.5f)
         {
-            move.moveSpeed = 4;
+            move.moveSpeed = 6;
         }
         else
         {
-            move.moveSpeed = 2;
+            move.moveSpeed = 4;
         }
-    }
-
-    void UpdateInput()
-    {
-        //LeftControllerDevice.TryGetFeatureValue(CommonUsages.deviceVelocity, out LeftControllerVelocity);
-        //RightControllerDevice.TryGetFeatureValue(CommonUsages.deviceVelocity, out RightControllerVelocity);
-
-        //RightControllerVelocity = rightVelocity.ReadValue<Vector3>();
-        //LeftControllerVelocity = leftVelocity.ReadValue<Vector3>();
-
-        //RightControllerVelocity = rightVelocity.action.ReadValue<Vector3>();
-        //LeftControllerVelocity = leftVelocity.action.ReadValue<Vector3>();
-        
-        Debug.Log(RightControllerVelocity.magnitude);
-        Debug.Log(LeftControllerVelocity.magnitude);
     }
 }

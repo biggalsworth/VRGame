@@ -14,6 +14,8 @@ public class EnemyVital : MonoBehaviour
 
     public bodyParts bodyPart;
 
+    public EnemyStats stats;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +35,7 @@ public class EnemyVital : MonoBehaviour
             damage += 5.0f;
         }
 
-        transform.parent.GetComponent<EnemyStats>().TakeDamage(damage);
+        stats.TakeDamage(damage);
 
     }
 }

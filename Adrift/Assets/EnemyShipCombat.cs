@@ -21,6 +21,11 @@ public class EnemyShipCombat : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    private void Awake()
+    {
+        bulletSupply = GameObject.Find("EnemyBulletManager").GetComponent<EnemyBulletManager>();
+    }
+
     // Update is called once per frame
     void Update()
     {

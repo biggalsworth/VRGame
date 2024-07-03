@@ -33,7 +33,6 @@ public class BulletScript : MonoBehaviour
         {
             if (other.tag != "Player" && other.tag != "Ignore")
             {
-                Debug.Log(other.transform.name);
                 destroyBullet();
             }
             if (other.tag == "Enemy")

@@ -6,7 +6,7 @@ public class EnemyStats : MonoBehaviour
 {
 
     public float maxHealth = 100f;
-    private float health;
+    public float health;
 
 
 
@@ -19,6 +19,7 @@ public class EnemyStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
 
 
@@ -29,7 +30,6 @@ public class EnemyStats : MonoBehaviour
         if (health <= 0)
         {
             health = 0;
-            Debug.Log("Die");
         }
     }
 }

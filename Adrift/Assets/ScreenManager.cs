@@ -45,7 +45,7 @@ public class ScreenManager : MonoBehaviour
 
     [Header("Travel")]
     public GameObject TravelPanel;
-
+    public TextMeshProUGUI destinationText;
 
 
 

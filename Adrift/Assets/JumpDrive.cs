@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +14,7 @@ public class JumpDrive : MonoBehaviour
 
     public TextMeshProUGUI warningTextBox;
     public TextMeshProUGUI SpeedValueText;
+    public TextMeshProUGUI destinationText;
 
     BasicDrive driveScript;
 
@@ -38,8 +38,6 @@ public class JumpDrive : MonoBehaviour
         if (jumping)
         {
             gameObject.isStatic = true;
-            SpeedValueText.text = "5.675 Mil";
-
         }
     }
 
@@ -79,13 +77,15 @@ public class JumpDrive : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
         portalAnim.Play("open");
+        yield return new WaitForSeconds(0.5f);
+        SpeedValueText.text = "5.675 Mil";
         yield return new WaitForSeconds(5f);
         sceneLoader.NextScene(sceneToLoad);
     }
 
     public void SelectLocation(string name)
     {
-        Debug.Log("Selected");
+        destinationText.text = "Travel to \n" + name;
         sceneToLoad = name;
         Debug.Log("Travel to " + sceneToLoad);
     }

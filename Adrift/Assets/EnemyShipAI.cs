@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-enum EnemyState
+public enum EnemyState
 {
     wandering,
     engaging,
     idle,
-    attack
+    attack,
+    dead
 }
 
 public class EnemyShipAI : MonoBehaviour
@@ -68,7 +69,7 @@ public class EnemyShipAI : MonoBehaviour
                     rb.AddForce(transform.forward * speed, ForceMode.Force);
                 }
 
-                if (angleToPlayer < detectionRange && Vector3.Distance(target.position, gameObject.transform.position) < 70f)
+                if (angleToPlayer < detectionRange && Vector3.Distance(target.position, gameObject.transform.position) < 90f)
                 {
                     state = EnemyState.engaging;
                 }
