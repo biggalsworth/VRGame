@@ -42,7 +42,7 @@ public class BulletScript : MonoBehaviour
                 {
                     other.GetComponent<EnemyVital>().RecieveDamage(damage);
                 }
-                else
+                else if(other.GetComponent<EnemyShipStats>() != null)
                 {
                     other.GetComponent<EnemyShipStats>().TakeDamage(damage);
                 }

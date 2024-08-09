@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zinnia.Tracking.Collision.Active.Operation.Extraction;
 
 public class SceneSetup : MonoBehaviour
@@ -14,6 +15,10 @@ public class SceneSetup : MonoBehaviour
         {
             RenderSettings.skybox = LevelSkybox;
         }
+
+        //get the current driving scene for the player to load back to
+        PlayerPrefs.SetString("Scene", SceneManager.GetActiveScene().name);
+        PlayerPrefs.Save();
     }
 
     // Update is called once per frame

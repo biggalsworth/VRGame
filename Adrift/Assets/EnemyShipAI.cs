@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public enum EnemyState
@@ -20,7 +21,7 @@ public class EnemyShipAI : MonoBehaviour
     Transform target;
     Vector3 targetFront;
 
-    public float dist = 15f;
+    public float dist = 20f;
 
     EnemyState state = EnemyState.wandering;
 
@@ -31,8 +32,11 @@ public class EnemyShipAI : MonoBehaviour
 
     public float detectionRange = 65f;
 
+    bool frozen = false;
+
     private void Start()
     {
+        stats = GetComponent<EnemyShipStats>();
         StartCoroutine(loop());
     }
 
@@ -48,9 +52,17 @@ public class EnemyShipAI : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
 
-            if (Vector3.Distance(target.position, transform.position) > dist && state != EnemyState.wandering)
+            // if ship is stunned, dont add any new force
+            if (frozen)
+            {
+                continue;
+            }
+
+            #region Deciding state
+
+            if (Vector3.Distance(target.position, transform.position) > dist + 5 && state != EnemyState.wandering)
             {
                 state = EnemyState.engaging;
             }
@@ -73,12 +85,24 @@ public class EnemyShipAI : MonoBehaviour
                 {
                     state = EnemyState.engaging;
                 }
+
+                /*
+                if(angleToPlayer < 90 && Vector3.Distance(target.position, gameObject.transform.position) < 90f)
+                {
+                    state = EnemyState.engaging;
+                }
+                */
             }
 
             if (state == EnemyState.engaging)
             {
+                // if we have shot too far past the player, this enemy needs to stop its current momentum
+                if(Vector3.Distance(target.position, transform.position) > dist + 10)
+                {
+                    rb.velocity = Vector3.zero;
+                }
+
                 Debug.Log("ENGAGING");
-                RaycastHit hit;
                 transform.LookAt(target.position);
 
                 Vector3 playerSight = transform.position - target.position;
@@ -86,22 +110,23 @@ public class EnemyShipAI : MonoBehaviour
                 // how far is the angle of the player relevant to our current sight
                 float angleToEnemy = Vector3.Angle(target.transform.forward, playerSight);
 
-                if (angleToEnemy > 25f)
+                if (angleToEnemy > 80f)
                 {
                     Debug.Log("Going to the front");
+                    rb.velocity = Vector3.zero; rb.velocity.Normalize();
                     transform.LookAt(targetFront + target.transform.forward * 15f);
-                    if (rb.velocity.magnitude < maxWanderSpeed * 10)
-                    {
-                        rb.AddForce(transform.forward * leapSpeed, ForceMode.Force);
-                    }
-                }
+                    rb.AddForce(transform.forward * speed, ForceMode.Force);
+                }   
                 else
                 {
+                    Debug.Log("Moving");
                     if (Vector3.Distance(transform.position, target.position) > dist)
                     {
                         if (Random.Range(0, 5) == 0)
                         {
-                            switch (Random.Range(0, 14))
+                            rb.AddForce(transform.forward * leapSpeed/2, ForceMode.Impulse);
+
+                            switch (Random.Range(0, 5))
                             {
                                 case 0:
                                     if (angleToPlayer < 0)
@@ -132,7 +157,7 @@ public class EnemyShipAI : MonoBehaviour
                         else
                         {
                             transform.LookAt(target.position);
-                            if (rb.velocity.magnitude < maxWanderSpeed)
+                            if (rb.velocity.magnitude < maxWanderSpeed + 5)
                             {
                                 rb.AddForce(transform.forward * speed, ForceMode.Force);
                             }
@@ -141,34 +166,60 @@ public class EnemyShipAI : MonoBehaviour
                     }
                     else
                     {
-                        if (rb.velocity.magnitude < maxWanderSpeed * 1.25f)
+                        Debug.Log("Attempting to shoot");
+                        if (rb.velocity.magnitude > 0)
                         {
                             rb.velocity = Vector3.zero;
                         }
                         state = EnemyState.attack;
-                        transform.LookAt(targetFront);
 
                     }
                 }
             }
 
-
             if (state == EnemyState.attack)
             {
                 transform.LookAt(target.position);
-                if (Random.Range(0, 20) == 0)
-                {
-                    transform.LookAt(target.position);
-                    //rb.AddForce(-transform.forward * speed, ForceMode.Impulse);
-                }
-                else
-                {
-                    GetComponent<EnemyShipCombat>().Shoot();
-                }
+                GetComponent<EnemyShipCombat>().Shoot();
+                rb.AddForce(-transform.forward * speed/2, ForceMode.Impulse);
+                state = EnemyState.engaging;
 
                 Debug.Log("ENEMY FIRES");
             }
+
+            #endregion
+
+            #region Should We Board
+             
+            if(target.GetComponent<ShipStats>().shipHealth <= 10)
+            {
+                if(stats.health  > stats.maxHealth / 10)
+                {
+                    GameObject.Find("SceneManager").GetComponent<SceneMaster>().Invasion();
+                    rb.velocity = Vector3.zero;
+                    break;
+                }   
+                else
+                {
+                    transform.LookAt(target.position);
+                    transform.Rotate(0, 180, 0);
+                    rb.AddForce(transform.forward * (speed * 10f), ForceMode.Impulse);
+                    yield return new WaitForSeconds(2f);
+                    GetComponent<SpawnedObjClass>().Available();
+                }
+            }
+
+            #endregion
+
         }
 
+    }
+
+    internal IEnumerator Freeze()
+    {
+        frozen = true;
+        state = EnemyState.engaging;
+        yield return new WaitForSeconds(5f);
+        frozen = false;
     }
 }

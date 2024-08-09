@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyShipStats : MonoBehaviour
 {
     public int maxHealth;
-    float health;
+    public float health;
 
     [HideInInspector]
     public bool dead = false;
@@ -13,7 +13,13 @@ public class EnemyShipStats : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
+    {
+        GetComponent<Animator>().Play("EnemyIdle");
+
+        health = maxHealth;
+    }
+    private void OnEnable()
     {
         health = maxHealth;
     }

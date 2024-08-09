@@ -8,12 +8,16 @@ public class EnemyStats : MonoBehaviour
     public float maxHealth = 100f;
     public float health;
 
+    bool dead = false;
+
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         health = maxHealth;
+        GameObject.Find("Enemies").GetComponent<InvasionManager>().enemyCount++;
+
     }
 
     // Update is called once per frame
@@ -25,11 +29,16 @@ public class EnemyStats : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-
-        if (health <= 0)
+        if (!dead)
         {
-            health = 0;
+            health -= damage;
+
+            if (health <= 0)
+            {
+                dead = true;
+                health = 0;
+                GameObject.Find("Enemies").GetComponent<InvasionManager>().enemyCount--;
+            }
         }
     }
 }

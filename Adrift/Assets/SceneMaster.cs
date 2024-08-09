@@ -8,10 +8,17 @@ public class SceneMaster : MonoBehaviour
 {
     public DataManager dataManager;
 
+    public bool canChange = true;
+
+    [Header("For enemy boarding")]
+    public GameObject WarningUI;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        //DontDestroyOnLoad(this);    
+        //DontDestroyOnLoad(this);
+        WarningUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -23,22 +30,46 @@ public class SceneMaster : MonoBehaviour
 
     public void NextScene(string name)
     {
-        if (dataManager != null)
+        if (canChange)
         {
-            dataManager.Save();
-        }
+            canChange = false; // make sure multiple sources can't change the scene at once
+            if (dataManager != null)
+            {
+                dataManager.Save();
+            }
 
-        SceneManager.LoadScene(name, LoadSceneMode.Single);
+            SceneManager.LoadScene(name, LoadSceneMode.Single);
+        }
     }
 
     public void NextScene(int sceneId)
+    {
+        if (canChange)
+        {
+            canChange = false; // make sure multiple sources can't change the scene at once
+            if (dataManager != null)
+            {
+                dataManager.Save();
+            }
+
+            SceneManager.LoadScene(sceneId, LoadSceneMode.Single);
+        }
+    }
+
+
+    public IEnumerator Invasion()
     {
         if (dataManager != null)
         {
             dataManager.Save();
         }
+        WarningUI.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("Invade", LoadSceneMode.Single);
+    }
 
-        SceneManager.LoadScene(sceneId, LoadSceneMode.Single);
-       
+    public void ReturnToShip()
+    {
+        SceneManager.LoadScene(PlayerPrefs.GetString("Scene"), LoadSceneMode.Single);
     }
 }

@@ -7,6 +7,8 @@ public class DoorAnim : MonoBehaviour
     private Animator anim;
     AudioSource audio;
 
+    public bool locked = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,7 @@ public class DoorAnim : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" || other.tag == "Enemy" && !locked)
         {
             audio.PlayOneShot(audio.clip);
             anim.Play("open");
@@ -31,7 +33,7 @@ public class DoorAnim : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" || other.tag == "Enemy" && !locked)
         {
             anim.Play("close");
         }

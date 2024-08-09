@@ -45,33 +45,37 @@ public class Bonuses : MonoBehaviour
         currWealth = shipStats.currentWealth;
     }
 
-    public void UpdateBonuses(List<string> bonuses)
+    public void UpdateData(List<string> bonuses)
     {
         int newbonus;
 
-        speedBonus = ((Convert.ToInt32(bonuses[0]) - 1) * 20f);
+        // -- ENGINE/SPEED BONUS --
+
+        speedBonus = ((Convert.ToInt32(bonuses[0]) - 1) * 5f);
         engineLevel = Convert.ToInt32(bonuses[0]);
+
+
         // -- ROTATION BONUS --
 
         newbonus = Convert.ToInt32(bonuses[1]);
         stabiliserLevel = newbonus;
         //if bonus level is 1
-        if (newbonus < 2)
+        if (newbonus == 1)
         {
             rotationBonus = 0f;
         }
         //if bonus level is 2
-        else if( newbonus < 3)
+        else if( newbonus == 2)
         {
             rotationBonus = 0.25f;
         }
         //if bonus level is 3
-        else if( newbonus < 4)
+        else if( newbonus == 3)
         {
             rotationBonus = 0.5f;
         }
         //if bonus level is 4
-        else if( newbonus < 5)
+        else if( newbonus >= 4)
         {
             rotationBonus = 1f;
         }
@@ -80,34 +84,24 @@ public class Bonuses : MonoBehaviour
 
         newbonus = Convert.ToInt32(bonuses[2]);
         shieldLevel = newbonus;
-        if (newbonus < 2)
+        if (newbonus == 1)
         {
             shieldBonus = 0f;
         }
         //if bonus level is 2
-        else if (newbonus < 3)
+        else if (newbonus == 2)
         {
             shieldBonus = 100f;
         }
         //if bonus level is 3
-        else if (newbonus < 4)
+        else if (newbonus == 3)
         {
             shieldBonus = 150f;
         }
         //if bonus level is 4
-        else if (newbonus < 5)
+        else if (newbonus  == 4)
         {
             shieldBonus = 200f;
-        }
-
-        if(Mathf.Abs(shipStats.maxHealth - shipStats.shipHealth) < 10)
-        {
-            shipStats.maxHealth = 100f + shieldBonus;
-            shipStats.shipHealth = shipStats.maxHealth;
-        }
-        else
-        {
-            shipStats.maxHealth = 100f + shieldBonus;
         }
 
         storageCount = Convert.ToInt32(bonuses[3]);
@@ -116,8 +110,21 @@ public class Bonuses : MonoBehaviour
         currWealth = Convert.ToInt32(bonuses[6]);
 
         shipStats.shipStorage = storageCount;
+        shipStats.speed += speedBonus;
         shipStats.cargoValue = currValue;
         shipStats.shipHealth = currHealth;
         shipStats.currentWealth = currWealth;
+
+        
+
+        if(shipStats.maxHealth == shipStats.shipHealth)
+        {
+            shipStats.maxHealth = 100f + shieldBonus;
+            shipStats.shipHealth = shipStats.maxHealth;
+        }
+        else
+        {
+            shipStats.maxHealth = 100f + shieldBonus;
+        }
     }
 }

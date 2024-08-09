@@ -29,6 +29,10 @@ public class EnemyCombat : MonoBehaviour
                 Instantiate(enemyBullet, shootPoint.transform.position, shootPoint.transform.rotation, null);
                 gunAnim.SetBool("Shoot", true);
             }
+            else
+            {
+                gunAnim.SetBool("Shoot", true);
+            }
 
             yield return new WaitForSeconds(0.5f);
         }

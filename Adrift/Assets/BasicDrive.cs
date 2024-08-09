@@ -12,6 +12,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class BasicDrive : MonoBehaviour
 {
     public GameObject player;
+
+    public GameObject ShipMesh;
+
     public Transform seatPos;
     public Transform dismountPos;
 
@@ -107,7 +110,7 @@ public class BasicDrive : MonoBehaviour
 
                     float rotDiff = Mathf.Abs(transform.eulerAngles.y - currRotation);
 
-                    gameObject.transform.rotation = Quaternion.Slerp(seatPos.transform.rotation, Quaternion.Euler(0, currRotation, 0), Time.deltaTime * (rotationSpeed + Bonuses.instance.rotationBonus));
+                    gameObject.transform.rotation = Quaternion.Slerp(seatPos.transform.rotation, Quaternion.Euler(0, currRotation, 0), Time.deltaTime * (rotationSpeed - Bonuses.instance.rotationBonus));
 
                 }
                 else
@@ -119,17 +122,24 @@ public class BasicDrive : MonoBehaviour
                 currVelocity = rb.velocity.magnitude;
                 currVelocity = Mathf.Round(currVelocity * 100) / 100;
                 speedTracker.text = currVelocity.ToString();
+
+
+                float audioVolume = SoundCurve.Evaluate(Math.Abs(currThrottle));
+                foreach (AudioSource audio in engineSources)
+                {
+                    audio.volume = audioVolume;
+                }
+
             }
             else
             {
+                foreach (AudioSource audio in engineSources)
+                {
+                    audio.volume = 0;
+                }
+
                 rb.velocity = Vector3.zero;
                 gameObject.isStatic = true;
-            }
-
-            float audioVolume = SoundCurve.Evaluate(Math.Abs(currThrottle));
-            foreach (AudioSource audio in engineSources)
-            {
-                audio.volume = audioVolume;
             }
         }
     }
@@ -141,6 +151,8 @@ public class BasicDrive : MonoBehaviour
 
         if (!sitting)
         {
+            ShipMesh.SetActive(false);
+
             gameObject.isStatic = false;
 
             //engineAudioSource1.Play();
@@ -173,6 +185,7 @@ public class BasicDrive : MonoBehaviour
         
         else
         {
+            ShipMesh.SetActive(true);
 
             player.transform.position = dismountPos.position;
             //player.transform.parent = gameObject.transform;

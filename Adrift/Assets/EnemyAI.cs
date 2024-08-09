@@ -23,7 +23,7 @@ public class EnemyAI : MonoBehaviour
     public List<Transform> points = new List<Transform>();
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         player = GameObject.FindWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
@@ -33,74 +33,83 @@ public class EnemyAI : MonoBehaviour
         target = points[Random.Range(0, points.Count)];
         agent.destination = target.position;
 
+
+        StartCoroutine(Loop());
     }
 
     // Update is called once per frame
-    void Update()
+    IEnumerator Loop()
     {
-        if (stats.health > 0)
+        while (true)
         {
-            Vector3 playerDir = player.transform.position - transform.position;
-            // how far is the angle of the player relevant to our current sight
-            float angleToPlayer = Vector3.Angle(transform.forward, playerDir);
-
-
-            if (state == EnemyState.wandering)
+            if (stats.health > 0)
             {
-                if (angleToPlayer < detectionRange && Vector3.Distance(player.transform.position, gameObject.transform.position) < 15f)
+                Vector3 playerDir = player.transform.position - transform.position;
+                // how far is the angle of the player relevant to our current sight
+                float angleToPlayer = Vector3.Angle(transform.forward, playerDir);
+
+
+                if (state == EnemyState.wandering)
                 {
-                    state = EnemyState.engaging;
+                    if (angleToPlayer < detectionRange && Vector3.Distance(player.transform.position, gameObject.transform.position) < 15f)
+                    {
+                        state = EnemyState.engaging;
+                    }
+                    else
+                    {
+                        if (agent.remainingDistance < 1)
+                        {
+                            target = points[Random.Range(0, points.Count)];
+                            agent.destination = target.position;
+                        }
+                    }
                 }
                 else
                 {
-                    if (agent.remainingDistance < 1)
+                    agent.destination = player.transform.position;
+                }
+
+                if (state == EnemyState.engaging)
+                {
+                    if (agent.remainingDistance < 7f)
                     {
-                        target = points[Random.Range(0, points.Count)];
-                        agent.destination = target.position;
+                        state = EnemyState.attack;
                     }
                 }
-            }
-            else
-            {
-                agent.destination = player.transform.position;
-            }
 
-            if (state == EnemyState.engaging)
-            {
-                if (agent.remainingDistance < 10f)
+
+                if (state == EnemyState.attack)
                 {
-                    state = EnemyState.attack;
+                    agent.speed = 0;
+
+                    Vector3 lookPos = player.transform.position - transform.position;
+                    lookPos.y = 0;
+                    Quaternion rotation = Quaternion.LookRotation(lookPos);
+                    rotation.x = 0;
+                    rotation.z = 0;
+
+                    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.25f);
+
+                    if (agent.remainingDistance > 10f)
+                    {
+                        agent.speed = 3.5f;
+
+                        state = EnemyState.engaging;
+                    }
                 }
-            }
-
-
-            if (state == EnemyState.attack)
-            {
-                agent.speed = 0;
-
-                Vector3 lookPos = player.transform.position - transform.position;
-                lookPos.y = 0;
-                Quaternion rotation = Quaternion.LookRotation(lookPos);
-                rotation.x = 0;
-                rotation.z = 0;
-
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.25f);
-
-                if (agent.remainingDistance > 12f)
+                else
                 {
                     agent.speed = 3.5f;
-
-                    state = EnemyState.engaging;
                 }
             }
             else
             {
-                agent.speed = 3.5f;
+                state = EnemyState.dead;
+                yield return new WaitForSeconds(2f);
+                gameObject.SetActive(false);
             }
-        }
-        else
-        {
-            state = EnemyState.dead;
+
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

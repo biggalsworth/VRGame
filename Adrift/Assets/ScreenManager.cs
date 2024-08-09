@@ -61,6 +61,7 @@ public class ScreenManager : MonoBehaviour
         soundControl.clip = music[Random.Range(0, music.Count)];
 
         currScreen = StatsPanel;
+        currScreen.SetActive(true);
         Screen.SetActive(false);
     }
 

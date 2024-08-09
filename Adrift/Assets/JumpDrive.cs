@@ -17,6 +17,7 @@ public class JumpDrive : MonoBehaviour
     public TextMeshProUGUI destinationText;
 
     BasicDrive driveScript;
+    ShipStats stats;
 
     [HideInInspector]
     public bool jumping = false;
@@ -30,6 +31,8 @@ public class JumpDrive : MonoBehaviour
     void Start()
     {
         jumping = false;
+
+        stats = GetComponent<ShipStats>();
     }
 
     // Update is called once per frame
@@ -43,7 +46,7 @@ public class JumpDrive : MonoBehaviour
 
     public void StartJump()
     {
-        if(jumping == false)
+        if (jumping == false && stats.engaged == false)
         {
             if (sceneToLoad == "")
             {
@@ -62,30 +65,55 @@ public class JumpDrive : MonoBehaviour
                 }
             }
         }
+        else if(stats.engaged == true)
+        {
+            warningTextBox.text = "Currently in combat";
+        }
     }
 
     IEnumerator Jump()
     {
-        jumping = true;
-        spawner.SetActive(false);
-        gameObject.isStatic = true;
-        foreach (AudioSource source in engineSources)
+        if (stats.shipHealth > 10)
         {
-            source.volume = 1;
-            source.clip = JumpSound;
-            source.Play();
+            jumping = true;
+            spawner.SetActive(false);
+            gameObject.isStatic = true;
+            foreach (AudioSource source in engineSources)
+            {
+                source.volume = 1;
+                source.clip = JumpSound;
+                source.Play();
+            }
+            yield return new WaitForSeconds(1f);
+            portalAnim.Play("open");
+            yield return new WaitForSeconds(0.5f);
+            SpeedValueText.text = "5.675 Mil";
+            yield return new WaitForSeconds(5f);
+            sceneLoader.NextScene(sceneToLoad);
         }
-        yield return new WaitForSeconds(1f);
-        portalAnim.Play("open");
-        yield return new WaitForSeconds(0.5f);
-        SpeedValueText.text = "5.675 Mil";
-        yield return new WaitForSeconds(5f);
-        sceneLoader.NextScene(sceneToLoad);
+        else
+        {
+            warningTextBox.text = "Too Damaged";
+        }
     }
 
     public void SelectLocation(string name)
     {
-        destinationText.text = "Travel to \n" + name;
+        switch (SceneManager.GetSceneByName(name).buildIndex)
+        {
+            case 0:
+                destinationText.text = "Travel to\n Crimson System";
+                break;
+
+            case 1:
+                destinationText.text = "Travel to\n Epsilon Station";
+                break;
+
+            case 2:
+                destinationText.text = "Travel to\n Sminkoff Cluster";
+                break;
+
+        }
         sceneToLoad = name;
         Debug.Log("Travel to " + sceneToLoad);
     }

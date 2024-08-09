@@ -51,27 +51,30 @@ public class SpawnedObjClass : MonoBehaviour
 
         if (currDurability <= 0)
         {
-            ship.GetComponent<ShipStats>().cargoValue += value;
+            if (ship.GetComponent<ShipStats>().shipStorage + weight <= ship.GetComponent<ShipStats>().maxStorage)
+            {
+                ship.GetComponent<ShipStats>().cargoValue += value;
 
-            if (type == ObjectType.Asteroid)
-            {
-                ship.GetComponent<ShipStats>().GainItems(weight, value);
-                gameObject.GetComponent<Fracture>().FractureObject();
-            }
-            else if (type == ObjectType.EnemyShip)
-            {
-                ship.GetComponent<ShipStats>().GainItems(weight, value);
-            }
-            else
-            {
-                Available();
-            }
-            /*
-            available = true;
-            currDurability = durability;
+                if (type == ObjectType.Asteroid)
+                {
+                    ship.GetComponent<ShipStats>().GainItems(weight, value);
+                    gameObject.GetComponent<Fracture>().FractureObject();
+                }
+                else if (type == ObjectType.EnemyShip)
+                {
+                    ship.GetComponent<ShipStats>().GainItems(weight, value);
+                }
+                else
+                {
+                    Available();
+                }
+                /*
+                available = true;
+                currDurability = durability;
 
-            gameObject.SetActive(false);
-            */
+                gameObject.SetActive(false);
+                */
+            }
         }
     }
 

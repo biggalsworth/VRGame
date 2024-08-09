@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class EnemyManager : MonoBehaviour
             GameObject tempEnemy = enemies[i];
             if (tempEnemy.GetComponent<SpawnedObjClass>().available)
             {
+                tempEnemy.GetComponent<EnemyShipStats>().health = tempEnemy.GetComponent<EnemyShipStats>().maxHealth;
                 tempEnemy.GetComponent<SpawnedObjClass>().available = false;
                 return tempEnemy;
             }

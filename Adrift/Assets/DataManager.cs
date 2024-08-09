@@ -64,7 +64,7 @@ public class DataManager : MonoBehaviour
                 }
             }
         }
-        data.UpdateBonuses(loadedData);
+        data.UpdateData(loadedData);
     }
 
     [MenuItem("Tools/Save file")]

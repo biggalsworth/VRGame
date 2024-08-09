@@ -8,13 +8,16 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class ShipStats : MonoBehaviour
 {
-
     public float maxHealth = 100;
 
     public float shipHealth;
     bool canHeal = true;
     public int damageSeverity = 0;
     public PartsHandler shipDamageHandler;
+    [HideInInspector]
+    public bool engaged = false;
+    IEnumerator engageCoolOff;
+
 
     public float maxStorage;
     [HideInInspector]
@@ -31,11 +34,14 @@ public class ShipStats : MonoBehaviour
     public Color DangerLight;
     bool CodeRedActive = false;
 
+
     // Start is called before the first frame update
     void Start()
     {
         //shipHealth = maxHealth;
         CodeRedActive = false;
+
+        engageCoolOff = EngageCooldown();
     }
 
     // Update is called once per frame
@@ -87,6 +93,9 @@ public class ShipStats : MonoBehaviour
         {
             shipHealth = 0;
         }
+
+        StopCoroutine(engageCoolOff);
+        StartCoroutine(engageCoolOff);
     }
 
 
@@ -149,5 +158,12 @@ public class ShipStats : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         canHeal = true;
+    }
+
+    IEnumerator EngageCooldown()
+    {
+        engaged = true;
+        yield return new WaitForSeconds(5f);
+        engaged = false;
     }
 }

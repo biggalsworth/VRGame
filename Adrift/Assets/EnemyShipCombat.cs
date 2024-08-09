@@ -38,8 +38,10 @@ public class EnemyShipCombat : MonoBehaviour
         {
             GameObject currBullet = bulletSupply.GetBullet();
             currBullet.transform.position = shootPoint.position;
-            currBullet.transform.rotation = shootPoint.rotation;
-            currBullet.GetComponent<Rigidbody>().velocity = rb.velocity;
+            currBullet.transform.rotation = transform.rotation;
+            //currBullet.GetComponent<Rigidbody>().velocity = rb.velocity;
+            currBullet.GetComponent<Rigidbody>().AddForce(currBullet.transform.forward * 20f, ForceMode.Impulse);
+            StartCoroutine(currBullet.GetComponent<EnemyShipBullet>().countdown());
             StartCoroutine(ShotDelay());
         }
     }
@@ -48,6 +50,6 @@ public class EnemyShipCombat : MonoBehaviour
     {
         canShoot = false;
         yield return new WaitForSeconds(cooldown);
-        canShoot=true;
+        canShoot = true;
     }
 }

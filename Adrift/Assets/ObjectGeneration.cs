@@ -73,7 +73,7 @@ public class ObjectGeneration : MonoBehaviour
                     while (true)
                     {
                         Vector3 randPos = Vector3.zero;
-                        if (Random.Range(0, 101) > 20)
+                        if (Random.Range(0, 100) > 20)
                         {
                             randPos = Ship.transform.position + Ship.transform.forward * 200;
                             randPos = new Vector3(randPos.x + Random.Range(-10, 10), randPos.y + Random.Range(-10, 10), randPos.z + Random.Range(-10, 10));
@@ -97,7 +97,7 @@ public class ObjectGeneration : MonoBehaviour
                             tempObj.SetActive(true);
                             tempObj.transform.position = randPos;
                             tempObj.transform.LookAt(Ship.transform);
-                            tempObj.transform.Rotate(0, Random.Range(0, 180), 0);
+                            //tempObj.transform.Rotate(0, Random.Range(0, 160) , 0);
                             break;
                         }
                     }

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +14,9 @@ public class MenuManager : MonoBehaviour
     public GameObject MenuPanel;
     public GameObject ControlsPanel;
     public GameObject audioPanel;
+    public GameObject creditsPanel;
+
+    public TextMeshProUGUI creditsText;
 
     public InputActionReference menuButton;
     bool menuActive = false;
@@ -76,6 +81,16 @@ public class MenuManager : MonoBehaviour
                 activePanel.SetActive(false);
                 audioPanel.SetActive(true);
                 activePanel = audioPanel;
+            }
+        }
+        if(screenID == 5)
+        {
+            if(activePanel != creditsPanel)
+            {
+                activePanel.SetActive(false);
+                creditsPanel.SetActive(true);
+                activePanel = creditsPanel;
+                creditsText.text = File.ReadAllText("Assets/Resources/Credits.txt");
             }
         }
     }

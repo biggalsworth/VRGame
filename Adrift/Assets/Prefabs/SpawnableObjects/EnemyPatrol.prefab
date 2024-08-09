@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  health: 0
   dead: 0
 --- !u!114 &6230111762210675710
 MonoBehaviour:
@@ -312,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  health: 0
   dead: 0
 --- !u!114 &8647128639267869096
 MonoBehaviour:
@@ -15238,6 +15240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  health: 0
   dead: 0
 --- !u!114 &3311123158159181101
 MonoBehaviour:

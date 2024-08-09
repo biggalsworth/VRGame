@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class ShipCombat : MonoBehaviour
 {
@@ -15,7 +17,18 @@ public class ShipCombat : MonoBehaviour
 
     public InputActionReference shootButton;
 
-    public TurretManager turret;
+    public ShipWeapon turret;
+
+    public GameObject[] weapons;
+
+    [Header("EMP")]
+    public GameObject empObj;
+    public AudioSource empSound;
+    public float range;
+    public float EMPCooldown = 20;
+    public Button EMPButton;
+    public TextMeshProUGUI EMPText;
+    bool empAvailable = true;
 
     // Start is called before the first frame update
     void Start()
@@ -76,5 +89,39 @@ public class ShipCombat : MonoBehaviour
         {
             turret.Shoot();
         }
+    }
+
+    public void EMPBlast()
+    {
+        if(empAvailable)
+        {
+            StartCoroutine(EmpRoutine());
+        }
+    }
+
+    IEnumerator EmpRoutine()
+    {
+        empAvailable = false;
+        EMPButton.interactable = false;
+        EMPText.text = "RECHARGING";
+        empSound.PlayOneShot(empSound.clip);
+
+        empObj.GetComponent<ParticleSystem>().Play();
+
+        foreach(RaycastHit hit in Physics.SphereCastAll(empObj.transform.position, range, Vector3.forward))
+        {
+            if(hit.transform.gameObject.tag == "Enemy")
+            {
+                Debug.Log("STUN");
+                StartCoroutine(hit.transform.gameObject.GetComponent<EnemyShipAI>().Freeze());
+            }
+        }
+
+        yield return new WaitForSeconds(EMPCooldown);
+
+        empAvailable = true;
+        EMPButton.interactable = true;
+        EMPText.text = "READY";
+
     }
 }

@@ -11,10 +11,11 @@ public class EnemyShipBullet : MonoBehaviour
 
     public float lifetime = 10.0f;
 
-    IEnumerator lifeFunc;
+    [HideInInspector]
+    public IEnumerator lifeFunc;
 
     [HideInInspector]
-    public bool available = true;
+    public bool available = true;   
 
     public GameObject sparkObject;
     public GameObject mesh;
@@ -26,13 +27,14 @@ public class EnemyShipBullet : MonoBehaviour
         rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
 
         lifeFunc = countdown();
-        StartCoroutine(lifeFunc);
+        //StartCoroutine(lifeFunc);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ship"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ship") && !available)
         {
+            available = true;
             StartCoroutine(destroyBullet());
             if (GameObject.Find("Ship").GetComponent<ShipStats>() != null)
             {
@@ -57,7 +59,7 @@ public class EnemyShipBullet : MonoBehaviour
 
     }
 
-    IEnumerator countdown()
+    public IEnumerator countdown()
     {
         yield return new WaitForSeconds(lifetime);
         StartCoroutine(destroyBullet());
