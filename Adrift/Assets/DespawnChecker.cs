@@ -10,7 +10,7 @@ public class DespawnChecker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ship = GameObject.FindGameObjectWithTag("ShipParent");
     }
 
     // Update is called once per frame

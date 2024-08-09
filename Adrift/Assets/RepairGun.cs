@@ -28,7 +28,7 @@ public class RepairGun : MonoBehaviour
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(startPos.position, startPos.forward, out hit, 5f))
             {
-                if (hit.collider.gameObject.layer == 6)
+                if (hit.collider.gameObject.tag == "Fixable")
                 {
                     if (currPart != hit.collider.gameObject)
                     {

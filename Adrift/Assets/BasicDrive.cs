@@ -12,6 +12,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class BasicDrive : MonoBehaviour
 {
     public GameObject player;
+    public GameObject locomotion;
 
     public GameObject ShipMesh;
 
@@ -160,8 +161,8 @@ public class BasicDrive : MonoBehaviour
 
             //player.transform.parent = null;
 
-            player.GetComponent<LocomotionSystem>().enabled = false;
-            player.GetComponent<ContinuousMoveProviderBase>().enabled = false;
+            locomotion.GetComponent<LocomotionSystem>().enabled = false;
+            locomotion.GetComponent<ContinuousMoveProviderBase>().enabled = false;
             player.GetComponent<CharacterController>().enabled = false;
 
 
@@ -191,8 +192,8 @@ public class BasicDrive : MonoBehaviour
             //player.transform.parent = gameObject.transform;
             player.transform.parent = null;
 
-            player.GetComponent<LocomotionSystem>().enabled = true;
-            player.GetComponent<ContinuousMoveProviderBase>().enabled = true;
+            locomotion.GetComponent<LocomotionSystem>().enabled = true;
+            locomotion.GetComponent<ContinuousMoveProviderBase>().enabled = true;
             player.GetComponent<CharacterController>().enabled = true;
 
 

@@ -26,7 +26,9 @@ public class EnemyCombat : MonoBehaviour
             if (ai.state == EnemyState.attack)
             {
                 shootPoint.LookAt(ai.player.transform.position);
-                Instantiate(enemyBullet, shootPoint.transform.position, shootPoint.transform.rotation, null);
+                GameObject obj = Instantiate(enemyBullet, shootPoint.transform.position, shootPoint.transform.rotation, null);
+                obj.GetComponent<BulletScript>().isEnemyBullet = true;
+                obj.tag = "Enemy";
                 gunAnim.SetBool("Shoot", true);
             }
             else

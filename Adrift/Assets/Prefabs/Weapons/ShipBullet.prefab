@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 1056930988428629133}
   m_Layer: 0
   m_Name: ShipBullet
-  m_TagString: Untagged
+  m_TagString: Ignore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2421b6a1abe0f40a1c33efce0a9fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnemyBullet: 0
   damage: 10
   speed: 30
   lifetime: 5

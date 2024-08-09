@@ -22,7 +22,7 @@ public class ScreenManager : MonoBehaviour
 
     GameObject currScreen;
 
-    [Header ("Stats Screen")]
+    [Header("Stats Screen")]
     public GameObject StatsPanel;
 
     public TextMeshProUGUI healthText;
@@ -33,6 +33,9 @@ public class ScreenManager : MonoBehaviour
 
     public TextMeshProUGUI inventoryAmount;
     public Slider inventorySlider;
+
+    public AudioClip[] buttonSounds;
+    public AudioSource buttonSource;
 
     [Header("Weapon Systems")]
     public GameObject weaponsPanel;
@@ -176,5 +179,10 @@ public class ScreenManager : MonoBehaviour
         soundControl.Stop();
         soundControl.clip = music[Random.Range(0, music.Count)];
         soundControl.Play();
+    }
+
+    public void Beep()
+    {
+        buttonSource.PlayOneShot(buttonSounds[Random.Range(0, buttonSounds.Length)]);
     }
 }

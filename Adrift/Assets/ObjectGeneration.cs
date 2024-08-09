@@ -97,7 +97,7 @@ public class ObjectGeneration : MonoBehaviour
                             tempObj.SetActive(true);
                             tempObj.transform.position = randPos;
                             tempObj.transform.LookAt(Ship.transform);
-                            //tempObj.transform.Rotate(0, Random.Range(0, 160) , 0);
+                            tempObj.transform.Rotate(0, Random.Range(0, 360) , 0);
                             break;
                         }
                     }

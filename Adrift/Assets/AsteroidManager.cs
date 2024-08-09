@@ -11,6 +11,7 @@ public class AsteroidManager : MonoBehaviour
     private List<GameObject> asteroids = new List<GameObject>();
 
     public int asteroidAmount = 100;
+    public int activeAsteroidAmount = 100;
 
     //public List<GameObject> asteroids;
 
@@ -58,7 +59,7 @@ public class AsteroidManager : MonoBehaviour
     private void DefaultAsteroids()
     {
         GameObject Ship = GameObject.Find("Ship");
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < activeAsteroidAmount; i++)
         {
             GameObject tempObj = GetAsteroid();
             if (tempObj != null)

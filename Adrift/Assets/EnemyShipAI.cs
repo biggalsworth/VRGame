@@ -97,10 +97,11 @@ public class EnemyShipAI : MonoBehaviour
             if (state == EnemyState.engaging)
             {
                 // if we have shot too far past the player, this enemy needs to stop its current momentum
-                if(Vector3.Distance(target.position, transform.position) > dist + 10)
+                if (Vector3.Distance(target.position, transform.position) > 90f && rb.velocity.magnitude > maxWanderSpeed + 5f)
                 {
                     rb.velocity = Vector3.zero;
                 }
+
 
                 Debug.Log("ENGAGING");
                 transform.LookAt(target.position);

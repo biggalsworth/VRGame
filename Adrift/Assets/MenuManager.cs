@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour
     public GameObject ControlsPanel;
     public GameObject audioPanel;
     public GameObject creditsPanel;
+    public GameObject quitPanel;
 
     public TextMeshProUGUI creditsText;
 
@@ -25,8 +26,8 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MenuPanel.SetActive(true);
-        activePanel = MenuPanel;
+        quitPanel.SetActive(true);
+        activePanel = quitPanel;
         menuCanvas.SetActive(false);
     }
 
@@ -92,6 +93,29 @@ public class MenuManager : MonoBehaviour
                 activePanel = creditsPanel;
                 creditsText.text = File.ReadAllText("Assets/Resources/Credits.txt");
             }
+        }
+        if(screenID == 6)
+        {
+            if(activePanel != quitPanel)
+            {
+                activePanel.SetActive(false);
+                quitPanel.SetActive(true);
+                activePanel = quitPanel;
+            }
+        }
+    }
+
+
+
+    public void Quit(bool save)
+    {
+        if (save)
+        {
+            DataManager.instance.Save();
+        }
+        else
+        {
+            Application.Quit();
         }
     }
 }

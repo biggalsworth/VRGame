@@ -25,7 +25,7 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.Find("PlayerCentre");
         agent = GetComponent<NavMeshAgent>();
         stats = GetComponent<EnemyStats>();
 
@@ -71,7 +71,7 @@ public class EnemyAI : MonoBehaviour
 
                 if (state == EnemyState.engaging)
                 {
-                    if (agent.remainingDistance < 7f)
+                    if (agent.remainingDistance < 10f)
                     {
                         state = EnemyState.attack;
                     }
@@ -90,7 +90,7 @@ public class EnemyAI : MonoBehaviour
 
                     transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.25f);
 
-                    if (agent.remainingDistance > 10f)
+                    if (agent.remainingDistance > 13f)
                     {
                         agent.speed = 3.5f;
 

@@ -40,11 +40,11 @@ public class PlayerSprint : MonoBehaviour
     {
         if(RightControllerVelocity.magnitude > 0.5f || LeftControllerVelocity.magnitude > 0.5f)
         {
-            move.moveSpeed = 6;
+            move.moveSpeed = 5;
         }
         else
         {
-            move.moveSpeed = 4;
+            move.moveSpeed = 3;
         }
     }
 }

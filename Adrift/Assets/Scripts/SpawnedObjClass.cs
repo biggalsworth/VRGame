@@ -91,7 +91,7 @@ public class SpawnedObjClass : MonoBehaviour
     {
         if (other.name != "CollisionChecker" && other.gameObject.layer == LayerMask.NameToLayer("Ship") && other.tag != "Ignore")
         {
-            Available();
+            //Available();
         }
     }
     

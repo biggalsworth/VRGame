@@ -35,7 +35,7 @@ public class BulletScript : MonoBehaviour
             {
                 destroyBullet();
             }
-            if (other.tag == "Enemy")
+            if (other.tag == "Enemy" && !isEnemyBullet)
             {
                 destroyBullet();
                 if (other.GetComponent<EnemyVital>() != null)
@@ -58,6 +58,13 @@ public class BulletScript : MonoBehaviour
                     GameObject.Find("Ship").GetComponent<ShipStats>().TakeDamage(damage);
                 }
             }
+            
+            else if(other.gameObject.tag == "Player")
+            {
+                destroyBullet();
+                other.GetComponent<PlayerStats>().TakeDamage(damage);
+            }
+            
         }
     }
 

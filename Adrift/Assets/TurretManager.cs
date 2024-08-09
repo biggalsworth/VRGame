@@ -9,6 +9,7 @@ public class TurretManager : ShipWeapon
     public ShipCombat shipCombat;
     public ObjectPool bulletManager;
     GameObject bullet;
+    GameObject bullet2;
 
     public Transform shootPoint1;
     public Transform shootPoint2;
@@ -58,15 +59,18 @@ public class TurretManager : ShipWeapon
             // Rotate the forward vector towards the target direction by one step
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
 
-            // Calculate a rotation a step closer to the target and applies rotation to this object
-            gameObject.transform.rotation = Quaternion.LookRotation(newDirection);
 
             //clamp x rotation
             //transform.eulerAngles = new Vector3(ClampAngle(transform.eulerAngles.x, transform.eulerAngles.x - 60, transform.eulerAngles.x + 60), 0, 0);
+            transform.eulerAngles = new Vector3(ClampAngle(transform.eulerAngles.x, -45, 90), 0, 0);
 
             //clamp y rotation
             //transform.eulerAngles = new Vector3(0, ClampAngle(transform.eulerAngles.y, transform.eulerAngles.y - 100, transform.eulerAngles.y + 100), 0);
-            transform.eulerAngles = new Vector3(0, ClampAngle(transform.eulerAngles.y, -45, 90), 0);
+            //transform.eulerAngles = new Vector3(0, ClampAngle(transform.eulerAngles.y, -180, 180), 0);
+
+
+            // Calculate a rotation a step closer to the target and applies rotation to this object
+            gameObject.transform.rotation = Quaternion.LookRotation(newDirection);
         }
     }
 
@@ -74,12 +78,23 @@ public class TurretManager : ShipWeapon
     {
         if (canShoot && energy >= 10)
         {
-            bullet = bulletManager.GetObject();
+            
 
             playSound();
             energy -= 10f;
-            Instantiate(bullet, shootPoint1.transform.position, shootPoint1.transform.rotation, null).GetComponent<Rigidbody>().velocity = shipCombat.gameObject.GetComponent<Rigidbody>().velocity;
-            Instantiate(bullet, shootPoint2.transform.position, shootPoint2.transform.rotation, null).GetComponent<Rigidbody>().velocity = shipCombat.gameObject.GetComponent<Rigidbody>().velocity;
+
+            bullet = bulletManager.GetObject();
+
+            bullet.transform.position = shootPoint1.transform.position;
+            bullet.transform.rotation = shootPoint1.transform.rotation;
+
+            bullet2 = bulletManager.GetObject();
+
+            bullet2.transform.position = shootPoint2.transform.position;
+            bullet2.transform.rotation = shootPoint2.transform.rotation;
+
+            //Instantiate(bullet, shootPoint1.transform.position, shootPoint1.transform.rotation, null).GetComponent<Rigidbody>().velocity = shipCombat.gameObject.GetComponent<Rigidbody>().velocity;
+            //Instantiate(bullet, shootPoint2.transform.position, shootPoint2.transform.rotation, null).GetComponent<Rigidbody>().velocity = shipCombat.gameObject.GetComponent<Rigidbody>().velocity;
 
             StopCoroutine(coolOff);
             StartCoroutine(coolOff);

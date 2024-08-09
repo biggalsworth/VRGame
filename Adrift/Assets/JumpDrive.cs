@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -99,19 +100,25 @@ public class JumpDrive : MonoBehaviour
 
     public void SelectLocation(string name)
     {
-        switch (SceneManager.GetSceneByName(name).buildIndex)
+        int i = SceneManager.GetSceneByName(name).buildIndex;
+        Debug.Log(i.ToString());
+        if (name == "red")
         {
-            case 0:
-                destinationText.text = "Travel to\n Crimson System";
-                break;
+            destinationText.text = "Travel to\n Crimson System";
+            sceneToLoad = SceneManager.GetSceneByBuildIndex(0).name;
+        }
+        else if(name == "station")
+        {
+            destinationText.text = "Travel to\n Epsilon Station";
+            sceneToLoad = SceneManager.GetSceneByBuildIndex(1).name;
 
-            case 1:
-                destinationText.text = "Travel to\n Epsilon Station";
-                break;
 
-            case 2:
-                destinationText.text = "Travel to\n Sminkoff Cluster";
-                break;
+        }
+        else if(name == "main")
+        {
+            destinationText.text = "Travel to\n Sminkoff Cluster";
+            sceneToLoad = SceneManager.GetSceneByBuildIndex(2).name;
+
 
         }
         sceneToLoad = name;

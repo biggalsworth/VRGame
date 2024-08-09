@@ -11,6 +11,8 @@ public class InvasionManager : MonoBehaviour
 
     private SceneMaster scene;
 
+    public GameObject CompletedUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,16 @@ public class InvasionManager : MonoBehaviour
 
     private void InvasionConquered()
     {
+        StartCoroutine(EndInvasion());
+    }
+
+    IEnumerator EndInvasion()
+    {
+        CompletedUI.SetActive(true);
+
+        yield return new WaitForSeconds(5f);
+
         scene.ReturnToShip();
+
     }
 }

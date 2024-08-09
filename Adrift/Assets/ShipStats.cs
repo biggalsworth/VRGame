@@ -42,6 +42,9 @@ public class ShipStats : MonoBehaviour
         CodeRedActive = false;
 
         engageCoolOff = EngageCooldown();
+
+        StartCoroutine(Heal());
+
     }
 
     // Update is called once per frame
@@ -58,7 +61,7 @@ public class ShipStats : MonoBehaviour
 
         if (shipHealth > 40 && canHeal)
         {
-            StartCoroutine(Heal());
+            //StartCoroutine(Heal());
         }
         if (shipHealth < 40)
         {
@@ -149,15 +152,19 @@ public class ShipStats : MonoBehaviour
 
     public IEnumerator Heal()
     {
-        canHeal = false;
-        if (shipHealth < maxHealth)
+        while (true)
         {
-            shipHealth += 2.0f;
+            
+            canHeal = false;
+            if (shipHealth < maxHealth && canHeal && shipHealth >= 40)
+            {
+                shipHealth += 2.0f;
+            }
+
+            yield return new WaitForSeconds(5f);
+
+            canHeal = true;
         }
-
-        yield return new WaitForSeconds(5f);
-
-        canHeal = true;
     }
 
     IEnumerator EngageCooldown()

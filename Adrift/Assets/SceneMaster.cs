@@ -70,6 +70,10 @@ public class SceneMaster : MonoBehaviour
 
     public void ReturnToShip()
     {
+        if (dataManager != null)
+        {
+            dataManager.Save();
+        }
         SceneManager.LoadScene(PlayerPrefs.GetString("Scene"), LoadSceneMode.Single);
     }
 }
