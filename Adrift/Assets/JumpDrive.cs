@@ -23,7 +23,8 @@ public class JumpDrive : MonoBehaviour
     [HideInInspector]
     public bool jumping = false;
 
-    public string sceneToLoad = "";
+    //public string sceneToLoad = "";
+    public int sceneToLoad = -1;
 
     public List<AudioSource> engineSources = new List<AudioSource>();
     public AudioClip JumpSound;
@@ -49,14 +50,14 @@ public class JumpDrive : MonoBehaviour
     {
         if (jumping == false && stats.engaged == false)
         {
-            if (sceneToLoad == "")
+            if (sceneToLoad == -1)
             {
                 Debug.Log(sceneToLoad);
                 warningTextBox.text = "No destination has been chosen";
             }
             else
             {
-                if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName(sceneToLoad))
+                if (SceneManager.GetActiveScene().buildIndex == sceneToLoad)
                 {
                     warningTextBox.text = "Already in this system";
                 }
@@ -98,30 +99,31 @@ public class JumpDrive : MonoBehaviour
         }
     }
 
-    public void SelectLocation(string name)
+    public void SelectLocation(int id)
     {
-        int i = SceneManager.GetSceneByName(name).buildIndex;
-        Debug.Log(i.ToString());
-        if (name == "red")
+        //int i = SceneManager.GetSceneByName(name).buildIndex;
+
+        Debug.Log(id);
+        if (id == 0)
         {
             destinationText.text = "Travel to\n Crimson System";
-            sceneToLoad = SceneManager.GetSceneByBuildIndex(0).name;
+            sceneToLoad = 0;
+            Debug.Log(SceneManager.GetSceneByBuildIndex(0).name);
+
         }
-        else if(name == "station")
+        if (id == 1)
         {
             destinationText.text = "Travel to\n Epsilon Station";
-            sceneToLoad = SceneManager.GetSceneByBuildIndex(1).name;
-
+            sceneToLoad = 1;
 
         }
-        else if(name == "main")
+        if(id == 2)
         {
             destinationText.text = "Travel to\n Sminkoff Cluster";
-            sceneToLoad = SceneManager.GetSceneByBuildIndex(2).name;
-
+            sceneToLoad = 2;
+            Debug.Log(SceneManager.GetSceneByBuildIndex(2).name);
 
         }
-        sceneToLoad = name;
         Debug.Log("Travel to " + sceneToLoad);
     }
 }

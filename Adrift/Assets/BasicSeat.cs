@@ -9,6 +9,7 @@ public class BasicSeat : MonoBehaviour
     public InputActionReference sitButton;
 
     GameObject player;
+    GameObject locomotion;
 
     bool sitting = false;
 
@@ -20,6 +21,7 @@ public class BasicSeat : MonoBehaviour
     void Start()
     {
         player = null;
+        locomotion = GameObject.Find("LocomotionSystem");
     }
 
     private void Awake()
@@ -43,17 +45,23 @@ public class BasicSeat : MonoBehaviour
             if (!sitting)
             {
                 sitting = true;
-                player.transform.position = transform.position;
-                player.GetComponent<LocomotionSystem>().enabled = false;
-                player.GetComponent<ContinuousMoveProviderBase>().enabled = false;
+                //player.transform.position = transform.position;
+                player.transform.position = sitDownPosition.transform.position;
+                player.transform.rotation = sitDownPosition.transform.rotation;
+
+                locomotion.GetComponent<LocomotionSystem>().enabled = false;
+                locomotion.GetComponent<ContinuousMoveProviderBase>().enabled = false;
                 player.GetComponent<CharacterController>().enabled = false;
             }
             else
             {
                 sitting = false;
-                player.transform.position = dismountPos.position;
-                player.GetComponent<LocomotionSystem>().enabled = true;
-                player.GetComponent<ContinuousMoveProviderBase>().enabled = true;
+                //player.transform.position = dismountPos.position;
+                player.transform.position = dismountPos.transform.position;
+                player.transform.rotation = dismountPos.transform.rotation;
+
+                locomotion.GetComponent<LocomotionSystem>().enabled = true;
+                locomotion.GetComponent<ContinuousMoveProviderBase>().enabled = true;
                 player.GetComponent<CharacterController>().enabled = true;
             }
         }

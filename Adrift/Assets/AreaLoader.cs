@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class AreaLoader : MonoBehaviour
 
     [Tooltip("Should this area be unloaded on start?")]
     public bool startDeloaded = true;
+
+    bool loaded = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,14 +31,16 @@ public class AreaLoader : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-         if(other.tag == "Player")
+        if(other.tag == "Player")
         {
-            LoadArea();
+            if (!loaded)
+            {   
+                LoadArea();
+            }
         }
     }
-
 
     void LoadArea()
     {
@@ -44,6 +49,20 @@ public class AreaLoader : MonoBehaviour
             obj.SetActive(true);
         }
         foreach (GameObject obj in objectsToUnload)
+        {
+            obj.SetActive(false);
+        }
+    }
+
+
+
+    private void Unload()
+    {
+        foreach (GameObject obj in objectsToUnload)
+        {
+            obj.SetActive(true);
+        }
+        foreach (GameObject obj in objectsToLoad)
         {
             obj.SetActive(false);
         }

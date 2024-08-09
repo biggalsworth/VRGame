@@ -3,5 +3,5 @@
 1: Shield
 0: Storage
 0: Value
-100: Health
+40: Health
 60: Wealth

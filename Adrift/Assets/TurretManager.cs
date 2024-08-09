@@ -128,7 +128,7 @@ public class TurretManager : ShipWeapon
 
     public override void ResetLook()
     {
-        gameObject.transform.rotation = Quaternion.Euler(Vector3.zero);
+        gameObject.transform.localRotation = Quaternion.Euler(gameObject.transform.forward  );
     }
 
     IEnumerator Cooldown()
