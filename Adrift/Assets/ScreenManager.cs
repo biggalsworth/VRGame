@@ -43,8 +43,10 @@ public class ScreenManager : MonoBehaviour
     [Header("Radio")]
     public GameObject RadioPanel;
     public AudioSource soundControl;
+    public AudioSource bedSound;
     public List<AudioClip> music;
     public Slider volume;
+
 
     [Header("Travel")]
     public GameObject TravelPanel;
@@ -62,6 +64,7 @@ public class ScreenManager : MonoBehaviour
         healthIcon.color = highHealthColour;
 
         soundControl.clip = music[Random.Range(0, music.Count)];
+        bedSound.clip = soundControl.clip;
 
         currScreen = StatsPanel;
         currScreen.SetActive(true);
@@ -166,10 +169,12 @@ public class ScreenManager : MonoBehaviour
         if (soundControl.isPlaying)
         {
             soundControl.Pause();
+            bedSound.Pause();
         }
         else
         {
             soundControl.Play();
+            bedSound.Play();
 
         }
     }
@@ -177,8 +182,11 @@ public class ScreenManager : MonoBehaviour
     public void skipSong()
     {
         soundControl.Stop();
+        bedSound.Stop();
         soundControl.clip = music[Random.Range(0, music.Count)];
-        soundControl.Play();
+        bedSound.clip = soundControl.clip;
+        soundControl.Play();    
+        bedSound.Play();
     }
 
     public void Beep()

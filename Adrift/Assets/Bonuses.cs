@@ -117,7 +117,7 @@ public class Bonuses : MonoBehaviour
 
         
 
-        if(shipStats.maxHealth == shipStats.shipHealth)
+        if(shipStats.maxHealth <= shipStats.shipHealth)
         {
             shipStats.maxHealth = 100f + shieldBonus;
             shipStats.shipHealth = shipStats.maxHealth;

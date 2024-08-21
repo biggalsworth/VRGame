@@ -27,30 +27,31 @@ public class BulletScript : MonoBehaviour
         StartCoroutine(lifeFunc);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
+        GameObject obj = other.gameObject;
         if (!isEnemyBullet)
         {
-            if (other.tag != "Player" && other.tag != "Ignore")
+            if (obj.tag != "Player" && obj.tag != "Ignore")
             {
                 destroyBullet();
             }
-            if (other.tag == "Enemy" && !isEnemyBullet)
+            if (obj.tag == "Enemy" && !isEnemyBullet)
             {
                 destroyBullet();
-                if (other.GetComponent<EnemyVital>() != null)
+                if (obj.GetComponent<EnemyVital>() != null)
                 {
-                    other.GetComponent<EnemyVital>().RecieveDamage(damage);
+                    obj.GetComponent<EnemyVital>().RecieveDamage(damage);
                 }
-                else if(other.GetComponent<EnemyShipStats>() != null)
+                else if(obj.GetComponent<EnemyShipStats>() != null)
                 {
-                    other.GetComponent<EnemyShipStats>().TakeDamage(damage);
+                    obj.GetComponent<EnemyShipStats>().TakeDamage(damage);
                 }
             }
         }
         else
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Ship"))
+            if (obj.layer == LayerMask.NameToLayer("Ship"))
             {
                 destroyBullet();
                 if (GameObject.Find("Ship").GetComponent<ShipStats>() != null)
@@ -62,7 +63,7 @@ public class BulletScript : MonoBehaviour
             else if(other.gameObject.tag == "Player")
             {
                 destroyBullet();
-                other.GetComponent<PlayerStats>().TakeDamage(damage);
+                obj.GetComponent<PlayerStats>().TakeDamage(damage);
             }
             
         }

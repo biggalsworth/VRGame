@@ -100,12 +100,16 @@ public class BasicDrive : MonoBehaviour
                     currRotation = rotation.GetComponent<ShipMovment>().rot;
 
                     //if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude) <= Math.Abs(currThrottle))
-                    if (Math.Abs(currThrottle) > 0.5f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
+                    if (Math.Abs(currThrottle) > 1f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
                     {
                         //add forward direction based on seat orientation
                         //make sure to make the throttle increase with the ships allowed speed in ship stats
                         //*1000.0 to counteract the heavy mass
-                        rb.AddForce(seatPos.transform.forward * (currThrottle + GetComponent<ShipStats>().speed) * 1000.0f, ForceMode.Force);
+                        rb.AddForce(seatPos.transform.forward * (currThrottle * GetComponent<ShipStats>().speed) * 1000.0f, ForceMode.Force);
+                    }
+                    else
+                    {
+                        rb.AddForce(seatPos.transform.forward * (currThrottle * 0.5f) * 1000.0f, ForceMode.Force);
                     }
 
 

@@ -44,4 +44,11 @@ public class PlayerGun : MonoBehaviour
         yield return new WaitForSeconds(shootCooldown);
         canShoot=true;
     }
+
+
+    [Tooltip ("Should this object be a collider or trigger.\nTrue for solid collider, false for trigger")]
+    public void ShouldCollide(bool colliding)
+    {
+        GetComponent<Collider>().isTrigger = !colliding;
+    }
 }

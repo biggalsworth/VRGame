@@ -231,9 +231,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dist: 30
-  speed: 10
+  speed: 5
   leapSpeed: 5
-  maxWanderSpeed: 15
+  maxWanderSpeed: 5
   detectionRange: 80
 --- !u!114 &4489610372974654215
 MonoBehaviour:

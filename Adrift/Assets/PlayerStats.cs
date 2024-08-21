@@ -7,6 +7,7 @@ public class PlayerStats : MonoBehaviour
 {
     public float maxHealth = 100;
     public float health;
+    public bool immortal = false;
 
     public CharacterController controller;
 
@@ -24,7 +25,7 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0)
+        if (health <= 0 && !immortal)
         {
             StartCoroutine(Died());
         }

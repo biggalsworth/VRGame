@@ -30,7 +30,7 @@ public class UpgradeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WealthText.text = "Current Wealth: " + stats.cargoValue.ToString();
+        WealthText.text = "Current Wealth: " + stats.currentWealth.ToString();
 
         engineText.text = "Current level = " + bonus.engineLevel.ToString();
         enginePrice.text = "Upgrade:\n" + (50 * (bonus.engineLevel + 1)).ToString();

@@ -1,7 +1,7 @@
 1: Engine
 1: Stabilisers
-1: Shield
+4: Shield
 0: Storage
 0: Value
-40: Health
-60: Wealth
+300: Health
+700: Wealth

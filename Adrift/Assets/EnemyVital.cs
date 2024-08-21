@@ -11,7 +11,6 @@ public enum bodyParts
 
 public class EnemyVital : MonoBehaviour
 {
-
     public bodyParts bodyPart;
 
     public EnemyStats stats;
@@ -28,7 +27,7 @@ public class EnemyVital : MonoBehaviour
         
     }
 
-    public void RecieveDamage(float damage)
+    virtual public void RecieveDamage(float damage)
     {
         if(bodyPart == bodyParts.Head)
         {

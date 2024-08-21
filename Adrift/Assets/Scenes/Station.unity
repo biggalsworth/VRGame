@@ -17165,7 +17165,7 @@ MonoBehaviour:
   SpeedValueText: {fileID: 0}
   destinationText: {fileID: 0}
   jumping: 0
-  sceneToLoad: 
+  sceneToLoad: 0
   engineSources: []
   JumpSound: {fileID: 0}
 --- !u!114 &1811912102
@@ -18727,7 +18727,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Engineer Terminal
+  m_text: Credits
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -18754,7 +18754,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 6.85
+  m_fontSize: 8.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -20842,8 +20842,8 @@ MonoBehaviour:
   enginePrice: {fileID: 575447486}
   thrusterText: {fileID: 1712443214}
   thrusterPrice: {fileID: 2069598895}
-  shieldText: {fileID: 0}
-  shieldPrice: {fileID: 0}
+  shieldText: {fileID: 238384312}
+  shieldPrice: {fileID: 1564214870}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
+using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
+using UnityEngine.UIElements;
 
 
 public class EnemyAI : MonoBehaviour
@@ -18,7 +19,15 @@ public class EnemyAI : MonoBehaviour
     [HideInInspector]
     public EnemyState state = EnemyState.wandering;
 
-    public float detectionRange = 80f;
+    public float detectionDistance = 50f;
+    public float detectionAngle = 80;
+    public float engageDistance = 15f;
+
+    public float baseSpeed = 3f;
+
+    float rotationSmooth = 50f;
+
+    RaycastHit hit;
 
     public List<Transform> points = new List<Transform>();
 
@@ -29,9 +38,16 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         stats = GetComponent<EnemyStats>();
 
-
-        target = points[Random.Range(0, points.Count)];
-        agent.destination = target.position;
+        if (points.Count != 0)
+        {
+            target = points[Random.Range(0, points.Count)];
+            agent.destination = target.position;
+        }
+        else
+        {
+            target = null;
+            agent.destination = transform.position;
+        }
 
 
         StartCoroutine(Loop());
@@ -42,18 +58,30 @@ public class EnemyAI : MonoBehaviour
     {
         while (true)
         {
+
             if (stats.health > 0)
             {
-                Vector3 playerDir = player.transform.position - transform.position;
+
+                Vector3 pos = transform.position + new Vector3(0, 2, 0);
+                Debug.DrawRay(pos, transform.TransformDirection(transform.forward) * 100f, Color.green);
+
+                //direction to the player
+                Vector3 playerDir = (player.transform.position - transform.position).normalized;
                 // how far is the angle of the player relevant to our current sight
                 float angleToPlayer = Vector3.Angle(transform.forward, playerDir);
 
 
                 if (state == EnemyState.wandering)
                 {
-                    if (angleToPlayer < detectionRange && Vector3.Distance(player.transform.position, gameObject.transform.position) < 15f)
+                    if (angleToPlayer < detectionAngle && Vector3.Distance(player.transform.position, gameObject.transform.position) < detectionDistance)
                     {
-                        state = EnemyState.engaging;
+                        if (Physics.Raycast(transform.position, playerDir, out hit, engageDistance))
+                        {
+                            if (hit.collider.tag == "Player")
+                            {
+                                state = EnemyState.engaging;
+                            }
+                        }
                     }
                     else
                     {
@@ -63,6 +91,7 @@ public class EnemyAI : MonoBehaviour
                             agent.destination = target.position;
                         }
                     }
+
                 }
                 else
                 {
@@ -71,9 +100,15 @@ public class EnemyAI : MonoBehaviour
 
                 if (state == EnemyState.engaging)
                 {
-                    if (agent.remainingDistance < 10f)
+                    if (agent.remainingDistance < engageDistance)
                     {
-                        state = EnemyState.attack;
+                        if (Physics.Raycast(transform.position, playerDir, out hit, engageDistance))
+                        {
+                            if (hit.collider.tag == "Player")
+                            {
+                                state = EnemyState.attack;
+                            }
+                        }
                     }
                 }
 
@@ -82,25 +117,31 @@ public class EnemyAI : MonoBehaviour
                 {
                     agent.speed = 0;
 
-                    Vector3 lookPos = player.transform.position - transform.position;
-                    lookPos.y = 0;
-                    Quaternion rotation = Quaternion.LookRotation(lookPos);
-                    rotation.x = 0;
-                    rotation.z = 0;
-
-                    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.25f);
-
-                    if (agent.remainingDistance > 13f)
+                    if (agent.remainingDistance > engageDistance)
                     {
-                        agent.speed = 3.5f;
+                        agent.speed = baseSpeed;
 
                         state = EnemyState.engaging;
                     }
+
+
+                    if (agent.remainingDistance < engageDistance)
+                    {
+                        if (Physics.Raycast(transform.position, playerDir, out hit, engageDistance))
+                        {
+                            if (hit.collider.tag != "Player")
+                            {
+                                state = EnemyState.engaging;
+                            }
+                        }
+                    }
+
                 }
                 else
                 {
-                    agent.speed = 3.5f;
+                    agent.speed = baseSpeed;
                 }
+
             }
             else
             {
@@ -109,7 +150,23 @@ public class EnemyAI : MonoBehaviour
                 gameObject.SetActive(false);
             }
 
+
             yield return new WaitForSeconds(0.5f);
+
+        }
+    }
+
+    private void Update()
+    {
+        if(state == EnemyState.attack)
+        {
+            Vector3 lookPos = player.transform.position - transform.position;
+            lookPos.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            rotation.x = 0;
+            rotation.z = 0;
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSmooth * Time.deltaTime);
         }
     }
 }

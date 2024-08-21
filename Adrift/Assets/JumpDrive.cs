@@ -32,6 +32,8 @@ public class JumpDrive : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        warningTextBox.text = "";
+
         jumping = false;
 
         stats = GetComponent<ShipStats>();
@@ -102,6 +104,7 @@ public class JumpDrive : MonoBehaviour
     public void SelectLocation(int id)
     {
         //int i = SceneManager.GetSceneByName(name).buildIndex;
+        warningTextBox.text = "";
 
         Debug.Log(id);
         if (id == 0)
@@ -122,6 +125,17 @@ public class JumpDrive : MonoBehaviour
             destinationText.text = "Travel to\n Sminkoff Cluster";
             sceneToLoad = 2;
             Debug.Log(SceneManager.GetSceneByBuildIndex(2).name);
+
+        }
+        if(id == 3)
+        {
+            destinationText.text = "Travel to\n Atruvis's Graveyard";
+
+            sceneToLoad = 5;
+
+            Debug.Log(SceneManager.GetSceneByBuildIndex(5).name);
+
+            Debug.Log(SceneManager.GetSceneByBuildIndex(sceneToLoad).name);
 
         }
         Debug.Log("Travel to " + sceneToLoad);
