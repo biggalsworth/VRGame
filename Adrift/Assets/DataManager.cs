@@ -67,7 +67,7 @@ public class DataManager : MonoBehaviour
         data.UpdateData(loadedData);
     }
 
-    [MenuItem("Tools/Save file")]
+    //[MenuItem("Tools/Save file")]
     public void Save()
     {
 

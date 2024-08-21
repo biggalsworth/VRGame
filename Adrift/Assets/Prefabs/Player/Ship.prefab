@@ -37108,7 +37108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3564476279312498632
 Transform:
   m_ObjectHideFlags: 0
@@ -42636,11 +42636,13 @@ MonoBehaviour:
   soundControl: {fileID: 4857790059773143021}
   bedSound: {fileID: 6592488741094241862}
   music:
-  - {fileID: 8300000, guid: 8cd88430dd3ebe44287b9a57d4a352b3, type: 3}
-  - {fileID: 8300000, guid: 23ad58d9ec4225c47aadfd0b0b208e7b, type: 3}
-  - {fileID: 8300000, guid: f693e3a2102c8c742bf699674a12d5f4, type: 3}
-  - {fileID: 8300000, guid: ad99df42142d1ec478280caaec2fbc21, type: 3}
-  - {fileID: 8300000, guid: 0c45c7106fc1af44b95deb500a021381, type: 3}
+  - {fileID: 8300000, guid: f6053f4b0edb68247a252bfdc3c1769e, type: 3}
+  - {fileID: 8300000, guid: 91141c7223f1fd74c95a66a98f06166a, type: 3}
+  - {fileID: 8300000, guid: 5b0de74be7b0b184993be791cda97f56, type: 3}
+  - {fileID: 8300000, guid: 666a9c615a6d9d44ea1c32db461bc84a, type: 3}
+  - {fileID: 8300000, guid: cd2c2332169a8d243adcdc9d2d624f2a, type: 3}
+  - {fileID: 8300000, guid: 072e43ebce68050468f805b24860739d, type: 3}
+  - {fileID: 8300000, guid: daedb99b18c1f67499a93cca96bbae0e, type: 3}
   volume: {fileID: 7551149921842951147}
   TravelPanel: {fileID: 6896797393422721373}
   destinationText: {fileID: 0}
@@ -75409,7 +75411,7 @@ Transform:
   m_GameObject: {fileID: 8140150358669568229}
   serializedVersion: 2
   m_LocalRotation: {x: -2.842171e-14, y: 7.0567738e-15, z: 1, w: -0.00000035762784}
-  m_LocalPosition: {x: 0, y: 4.899, z: -1.564}
+  m_LocalPosition: {x: -0.0000006435439, y: 5.7990003, z: -3.464}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
