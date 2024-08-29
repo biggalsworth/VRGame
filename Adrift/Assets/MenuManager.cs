@@ -91,7 +91,32 @@ public class MenuManager : MonoBehaviour
                 activePanel.SetActive(false);
                 creditsPanel.SetActive(true);
                 activePanel = creditsPanel;
-                creditsText.text = File.ReadAllText("Assets/Resources/Credits.txt");
+                creditsText.text = @"
+Unity Asset Store Assets:
+
+Sci-Fi Styled Modular Pack by KARBOOSX
+Deep Space Skybox Pack by SEAN DUFFY
+Breakable Asteroids by CHADDERBOX
+It's a Pipe Dream Kitbash Pack by ONE POTATO KINGDOM STUDIO
+Laser Turret by URSA.ANIM
+Oxar Light Freighter by FIREBOLT STUDIOS
+QA Book by QATMO
+Sci-Fi PBR props by NEUTRONCAT
+Sci Fi Space Soldier PolygonR by POLYGONR
+Sci-Fi HandGun by LIFE HACKER
+Alien Ships Pack by AUTARCA
+Kitchen Appliance - Low Poly by ALSTRA INFINITE
+Food Pack Mixed by BRAIN FAIL PRODUCTIONS
+Sci-fi GUI skin by 3D.RINA
+Sci Fi Gun by MASH VIRTUAL
+
+Audio 
+Audio and some music provided by Pixabay
+Thanks to KSI for making dissimulation copyright free!
+
+Programming
+Benjamin Jukes
+";
             }
         }
         if(screenID == 6)
@@ -112,6 +137,7 @@ public class MenuManager : MonoBehaviour
         if (save)
         {
             DataManager.instance.Save();
+            Application.Quit();
         }
         else
         {

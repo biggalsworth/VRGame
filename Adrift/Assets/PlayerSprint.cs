@@ -17,9 +17,20 @@ public class PlayerSprint : MonoBehaviour
 
     public ContinuousMoveProviderBase move;
 
+    [Header("Footsteps")]
+    public AudioSource source;
+    public List<AudioClip> clips;
+    CharacterController characterController;
+
+    IEnumerator footsteps;
+
 
     private void Awake()
     {
+        footsteps = FootstepLoop();
+
+        characterController = GetComponent<CharacterController>();
+
         rightVelocity.action.performed += ctx => RightControllerVelocity = rightVelocity.action.ReadValue<Vector3>();
         leftVelocity.action.performed += ctx => LeftControllerVelocity = leftVelocity.action.ReadValue<Vector3>();
     }
@@ -28,11 +39,15 @@ public class PlayerSprint : MonoBehaviour
     {
         rightVelocity.action.performed -= ctx => RightControllerVelocity = rightVelocity.action.ReadValue<Vector3>();
         leftVelocity.action.performed -= ctx => LeftControllerVelocity = leftVelocity.action.ReadValue<Vector3>();
+
+        StartCoroutine(footsteps);
     }
     private void OnDisable()
     {
         rightVelocity.action.performed -= ctx => RightControllerVelocity = rightVelocity.action.ReadValue<Vector3>();
         leftVelocity.action.performed -= ctx => LeftControllerVelocity = leftVelocity.action.ReadValue<Vector3>();
+
+        StopCoroutine(footsteps);
     }
 
     void Update()
@@ -44,6 +59,27 @@ public class PlayerSprint : MonoBehaviour
         else
         {
             move.moveSpeed = 3;
+        }
+    }
+
+
+    IEnumerator FootstepLoop()
+    {
+        while (true)
+        {
+            if (characterController.velocity.magnitude > 0.5f)
+            {
+                source.PlayOneShot(clips[Random.Range(0, clips.Count)]);
+            }
+
+            if(move.moveSpeed == 5)
+            {
+                yield return new WaitForSeconds(0.25f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
         }
     }
 }

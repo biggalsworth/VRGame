@@ -37,11 +37,16 @@ public class EnemyShipCombat : MonoBehaviour
         if (canShoot && GetComponent<EnemyShipStats>().dead == false)
         {
             GameObject currBullet = bulletSupply.GetBullet();
-            currBullet.transform.position = shootPoint.position;
-            currBullet.transform.rotation = transform.rotation;
-            //currBullet.GetComponent<Rigidbody>().velocity = rb.velocity;
-            currBullet.GetComponent<Rigidbody>().AddForce(currBullet.transform.forward * 20f, ForceMode.Impulse);
-            StartCoroutine(currBullet.GetComponent<EnemyShipBullet>().countdown());
+            currBullet.transform.position = shootPoint.transform.position;
+            currBullet.transform.rotation = shootPoint.transform.rotation;
+
+            currBullet.SetActive(true);
+
+            currBullet.GetComponent<Rigidbody>().velocity = rb.velocity;
+            currBullet.GetComponent<Rigidbody>().AddForce(currBullet.transform.forward * currBullet.GetComponent<EnemyShipBullet>().speed * 1.5f, ForceMode.Impulse);
+            Debug.Log(GetComponent<Rigidbody>().velocity);
+
+
             StartCoroutine(ShotDelay());
         }
     }

@@ -6,7 +6,7 @@ public class EnemyShipBullet : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public float damage = 10.0f;
+    public float damage = 5.0f;
     public float speed = 5.0f;
 
     public float lifetime = 10.0f;
@@ -21,40 +21,60 @@ public class EnemyShipBullet : MonoBehaviour
     public GameObject mesh;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
+        lifeFunc = countdown();
+
+        mesh.SetActive(true);
+        sparkObject.SetActive(false);
+    }
+
+
+    private void OnEnable()
+    {
+        StopAllCoroutines();
 
         lifeFunc = countdown();
-        //StartCoroutine(lifeFunc);
+        StartCoroutine(lifeFunc);
+
+        mesh.SetActive(true);
+        sparkObject.SetActive(false);
+
+    }
+
+    private void OnDisable()
+    {
+        mesh.SetActive(true);
+        sparkObject.SetActive(false);
+
+        StopCoroutine(lifeFunc);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Ship") && !available)
         {
-            available = true;
-            StartCoroutine(destroyBullet());
-            if (GameObject.Find("Ship").GetComponent<ShipStats>() != null)
+            if (GameObject.FindGameObjectWithTag("ShipParent").GetComponent<ShipStats>() != null)
             {
-                GameObject.Find("Ship").GetComponent<ShipStats>().TakeDamage(damage);
+                GameObject.FindGameObjectWithTag("ShipParent").GetComponent<ShipStats>().TakeDamage(damage);
             }
+            StartCoroutine(destroyBullet());
         }
     }
-
+        
     public IEnumerator destroyBullet()
     {
-        StopCoroutine(lifeFunc);
+        available = true;
         mesh.SetActive(false);
         sparkObject.SetActive(true);
 
-        yield return new WaitForSeconds(4f);
-        
-        available = true;
-        gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+
         mesh.SetActive(true);
         sparkObject.SetActive(false);
+        available = true;
+        gameObject.SetActive(false);
 
 
     }

@@ -20,7 +20,7 @@ public class PartsHandler : MonoBehaviour
 
     public void BreakPart()
     {
-        for(int i = 0; i < Parts.Count-1; i++)
+        for(int i = 0; i < Parts.Count; i++)
         {
             GameObject part = Parts[i];
             if (part.GetComponent<ShipPart>().currHealth >= part.GetComponent<ShipPart>().partHealth)

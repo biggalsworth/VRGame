@@ -48,7 +48,7 @@ public class ShipCombat : MonoBehaviour
 
     private void OnEnable()
     {
-        shootButton.action.performed += Shoot;
+        shootButton.action.performed += Shoot;  
     }
     private void OnDisable()
     {
@@ -85,7 +85,7 @@ public class ShipCombat : MonoBehaviour
 
     private void Shoot(InputAction.CallbackContext context)
     {
-        if (inCombat)
+        if (inCombat && shipStats.brokendown == false)
         {
             turret.Shoot();
         }
@@ -101,27 +101,29 @@ public class ShipCombat : MonoBehaviour
 
     IEnumerator EmpRoutine()
     {
-        empAvailable = false;
-        EMPButton.interactable = false;
-        EMPText.text = "RECHARGING";
-        empSound.PlayOneShot(empSound.clip);
-
-        empObj.GetComponent<ParticleSystem>().Play();
-
-        foreach(RaycastHit hit in Physics.SphereCastAll(empObj.transform.position, range, Vector3.forward))
+        if (shipStats.brokendown == false)
         {
-            if(hit.transform.gameObject.tag == "Enemy")
+            empAvailable = false;
+            EMPButton.interactable = false;
+            EMPText.text = "RECHARGING";
+            empSound.PlayOneShot(empSound.clip);
+
+            empObj.GetComponent<ParticleSystem>().Play();
+
+            foreach (RaycastHit hit in Physics.SphereCastAll(empObj.transform.position, range, Vector3.forward))
             {
-                Debug.Log("STUN");
-                StartCoroutine(hit.transform.gameObject.GetComponent<EnemyShipAI>().Freeze());
+                if (hit.transform.gameObject.tag == "Enemy")
+                {
+                    Debug.Log("STUN");
+                    StartCoroutine(hit.transform.gameObject.GetComponent<EnemyShipAI>().Freeze());
+                }
             }
+
+            yield return new WaitForSeconds(EMPCooldown);
+
+            empAvailable = true;
+            EMPButton.interactable = true;
+            EMPText.text = "READY";
         }
-
-        yield return new WaitForSeconds(EMPCooldown);
-
-        empAvailable = true;
-        EMPButton.interactable = true;
-        EMPText.text = "READY";
-
     }
 }

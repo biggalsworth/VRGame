@@ -1,7 +1,10 @@
 1: Engine
 1: Stabilisers
-4: Shield
+1: Shield
 0: Storage
 0: Value
-300: Health
-700: Wealth
+100: Health
+0: Wealth
+
+Stored at
+C:/Users/User/AppData/LocalLow/The Big Bean/Adrift VRResources/Data/Progress.txt

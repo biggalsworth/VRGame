@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
@@ -17,6 +18,9 @@ public class ShipStats : MonoBehaviour
     [HideInInspector]
     public bool engaged = false;
     IEnumerator engageCoolOff;
+    [HideInInspector]
+    public bool brokendown = false;
+
 
 
     public float maxStorage;
@@ -39,6 +43,7 @@ public class ShipStats : MonoBehaviour
     void Start()
     {
         //shipHealth = maxHealth;
+
         CodeRedActive = false;
 
         engageCoolOff = EngageCooldown();
@@ -59,10 +64,11 @@ public class ShipStats : MonoBehaviour
             CodeRed(false);
         }
 
-        if (shipHealth > 40 && canHeal)
-        {
-            //StartCoroutine(Heal());
-        }
+        //if (shipHealth > 40 && canHeal)
+        //{
+        //StartCoroutine(Heal());
+        //}
+
         if (shipHealth < 40)
         {
             if(damageSeverity == 0)
@@ -87,6 +93,19 @@ public class ShipStats : MonoBehaviour
 
             }
         }
+
+        brokendown = shipHealth < 10 ? true : false;
+
+        /*
+        if (shipHealth < 10)
+        {
+            brokendown = true;
+        }
+        else
+        {
+            brokendown = false;
+        }
+        */
     }
 
     public void TakeDamage(float damage)
@@ -154,7 +173,6 @@ public class ShipStats : MonoBehaviour
     {
         while (true)
         {
-            
             canHeal = false;
             if (shipHealth < maxHealth && canHeal && shipHealth >= 40)
             {

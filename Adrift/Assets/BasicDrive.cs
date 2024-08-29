@@ -13,6 +13,7 @@ public class BasicDrive : MonoBehaviour
 {
     public GameObject player;
     public GameObject locomotion;
+    ShipStats stats;
 
     public GameObject ShipMesh;
 
@@ -69,6 +70,7 @@ public class BasicDrive : MonoBehaviour
         sitting = false;
 
         rb = GetComponent<Rigidbody>();
+        stats = GetComponent<ShipStats>();
         //Make the ship static to start;
         //rb.constraints = RigidbodyConstraints.FreezeAll;
 
@@ -90,61 +92,64 @@ public class BasicDrive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GetComponent<JumpDrive>().jumping == false)
+        if (!stats.brokendown)
         {
-            if (gameObject.GetComponent<ShipStats>().shipHealth > 10)
+            if (GetComponent<JumpDrive>().jumping == false)
             {
-                if (sitting)
+                if (gameObject.GetComponent<ShipStats>().shipHealth > 10)
                 {
-                    currThrottle = throttleSlider.value;
-                    currRotation = rotation.GetComponent<ShipMovment>().rot;
-
-                    //if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude) <= Math.Abs(currThrottle))
-                    if (Math.Abs(currThrottle) > 1f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
+                    if (sitting)
                     {
-                        //add forward direction based on seat orientation
-                        //make sure to make the throttle increase with the ships allowed speed in ship stats
-                        //*1000.0 to counteract the heavy mass
-                        rb.AddForce(seatPos.transform.forward * (currThrottle * GetComponent<ShipStats>().speed) * 1000.0f, ForceMode.Force);
+                        currThrottle = throttleSlider.value;
+                        currRotation = rotation.GetComponent<ShipMovment>().rot;
+
+                        //if (Math.Abs(currThrottle) > 0.5f && Math.Abs(rb.velocity.magnitude) <= Math.Abs(currThrottle))
+                        if (Math.Abs(currThrottle) > 1f)// && Math.Abs(rb.velocity.magnitude - currThrottle) > 0.5f)
+                        {
+                            //add forward direction based on seat orientation
+                            //make sure to make the throttle increase with the ships allowed speed in ship stats
+                            //*1000.0 to counteract the heavy mass
+                            rb.AddForce(seatPos.transform.forward * (currThrottle * GetComponent<ShipStats>().speed) * 1000.0f, ForceMode.Force);
+                        }
+                        else
+                        {
+                            rb.AddForce(seatPos.transform.forward * (currThrottle * 0.5f) * 1000.0f, ForceMode.Force);
+                        }
+
+
+                        float rotDiff = Mathf.Abs(transform.eulerAngles.y - currRotation);
+
+                        gameObject.transform.rotation = Quaternion.Slerp(seatPos.transform.rotation, Quaternion.Euler(0, currRotation, 0), Time.deltaTime * (rotationSpeed - Bonuses.instance.rotationBonus));
+
                     }
                     else
                     {
-                        rb.AddForce(seatPos.transform.forward * (currThrottle * 0.5f) * 1000.0f, ForceMode.Force);
+                        rb.velocity = Vector3.zero;
+                        gameObject.isStatic = true;
                     }
 
+                    currVelocity = rb.velocity.magnitude;
+                    currVelocity = Mathf.Round(currVelocity * 100) / 100;
+                    speedTracker.text = currVelocity.ToString();
 
-                    float rotDiff = Mathf.Abs(transform.eulerAngles.y - currRotation);
 
-                    gameObject.transform.rotation = Quaternion.Slerp(seatPos.transform.rotation, Quaternion.Euler(0, currRotation, 0), Time.deltaTime * (rotationSpeed - Bonuses.instance.rotationBonus));
+                    float audioVolume = SoundCurve.Evaluate(Math.Abs(currThrottle));
+                    foreach (AudioSource audio in engineSources)
+                    {
+                        audio.volume = audioVolume;
+                    }
 
                 }
                 else
                 {
+                    foreach (AudioSource audio in engineSources)
+                    {
+                        audio.volume = 0;
+                    }
+
                     rb.velocity = Vector3.zero;
                     gameObject.isStatic = true;
                 }
-
-                currVelocity = rb.velocity.magnitude;
-                currVelocity = Mathf.Round(currVelocity * 100) / 100;
-                speedTracker.text = currVelocity.ToString();
-
-
-                float audioVolume = SoundCurve.Evaluate(Math.Abs(currThrottle));
-                foreach (AudioSource audio in engineSources)
-                {
-                    audio.volume = audioVolume;
-                }
-
-            }
-            else
-            {
-                foreach (AudioSource audio in engineSources)
-                {
-                    audio.volume = 0;
-                }
-
-                rb.velocity = Vector3.zero;
-                gameObject.isStatic = true;
             }
         }
     }

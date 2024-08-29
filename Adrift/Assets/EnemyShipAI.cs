@@ -83,7 +83,11 @@ public class EnemyShipAI : MonoBehaviour
 
                 if (angleToPlayer < detectionRange && Vector3.Distance(target.position, gameObject.transform.position) < 90f)
                 {
-                    state = EnemyState.engaging;
+                    //Do not engage player if they are already broken down 
+                    if(target.transform.GetComponent<ShipStats>().shipHealth > 10)
+                    {
+                        state = EnemyState.engaging;
+                    }
                 }
 
                 /*
@@ -108,16 +112,19 @@ public class EnemyShipAI : MonoBehaviour
 
                 Vector3 playerSight = transform.position - target.position;
 
-                // how far is the angle of the player relevant to our current sight
+                // how far out are we to the players viewing angle
                 float angleToEnemy = Vector3.Angle(target.transform.forward, playerSight);
 
-                if (angleToEnemy > 80f)
+                if (angleToEnemy > 65f)
                 {
                     Debug.Log("Going to the front");
-                    rb.velocity = Vector3.zero; rb.velocity.Normalize();
-                    transform.LookAt(targetFront + target.transform.forward * 15f);
-                    rb.AddForce(transform.forward * speed, ForceMode.Force);
-                }   
+                    rb.velocity = Vector3.zero;
+                    transform.LookAt(targetFront + target.transform.forward * 20f);
+                    rb.AddForce(transform.forward * 30f, ForceMode.Impulse);
+                    yield return new WaitForSeconds(2f);
+                    rb.velocity = Vector3.zero;
+
+                }
                 else
                 {
                     Debug.Log("Moving");
@@ -194,7 +201,7 @@ public class EnemyShipAI : MonoBehaviour
              
             if(target.GetComponent<ShipStats>().shipHealth <= 10)
             {
-                if(stats.health  > stats.maxHealth / 10)
+                if(stats.health > stats.maxHealth / 2)
                 {
                     GameObject.Find("SceneManager").GetComponent<SceneMaster>().Invasion();
                     rb.velocity = Vector3.zero;

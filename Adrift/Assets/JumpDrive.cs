@@ -131,11 +131,9 @@ public class JumpDrive : MonoBehaviour
         {
             destinationText.text = "Travel to\n Atruvis's Graveyard";
 
-            sceneToLoad = 5;
+            sceneToLoad = 3;
 
-            Debug.Log(SceneManager.GetSceneByBuildIndex(5).name);
-
-            Debug.Log(SceneManager.GetSceneByBuildIndex(sceneToLoad).name);
+            Debug.Log(SceneManager.GetSceneByBuildIndex(3).name);
 
         }
         Debug.Log("Travel to " + sceneToLoad);

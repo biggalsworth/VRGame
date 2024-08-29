@@ -78,20 +78,23 @@ public class TurretManager : ShipWeapon
     {
         if (canShoot && energy >= 10)
         {
-            
-
             playSound();
-            energy -= 10f;
+            energy -= 5f;
 
             bullet = bulletManager.GetObject();
 
             bullet.transform.position = shootPoint1.transform.position;
             bullet.transform.rotation = shootPoint1.transform.rotation;
 
+            bullet.SetActive(true);
+
             bullet2 = bulletManager.GetObject();
 
             bullet2.transform.position = shootPoint2.transform.position;
             bullet2.transform.rotation = shootPoint2.transform.rotation;
+
+            bullet2.SetActive(true);
+
 
             //Instantiate(bullet, shootPoint1.transform.position, shootPoint1.transform.rotation, null).GetComponent<Rigidbody>().velocity = shipCombat.gameObject.GetComponent<Rigidbody>().velocity;
             //Instantiate(bullet, shootPoint2.transform.position, shootPoint2.transform.rotation, null).GetComponent<Rigidbody>().velocity = shipCombat.gameObject.GetComponent<Rigidbody>().velocity;

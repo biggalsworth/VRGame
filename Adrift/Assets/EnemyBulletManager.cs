@@ -16,8 +16,8 @@ public class EnemyBulletManager : MonoBehaviour
         while (bullets.Count < amount)
         {
             tempObj = Instantiate(bulletPrefab, gameObject.transform);
-            tempObj.GetComponent<EnemyShipBullet>().available = true;
             tempObj.SetActive(false);
+            tempObj.GetComponent<EnemyShipBullet>().available = true;
             bullets.Add(tempObj);
         }
     }
@@ -35,7 +35,7 @@ public class EnemyBulletManager : MonoBehaviour
             if(obj.GetComponent<EnemyShipBullet>().available == true)
             {
                 obj.GetComponent<EnemyShipBullet>().available = false;
-                obj.SetActive(true);
+                //obj.SetActive(true);
                 return obj;
             }
         }

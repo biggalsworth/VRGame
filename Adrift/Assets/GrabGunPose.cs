@@ -30,7 +30,6 @@ public class GrabGunPose : MonoBehaviour
     }
     public void ResetPose(BaseInteractionEventArgs args)
     {
-        Debug.Log(args.interactorObject.transform.name);
         try
         {
             args.interactorObject.transform.GetComponentInChildren<Animator>().SetBool("Gun", false);

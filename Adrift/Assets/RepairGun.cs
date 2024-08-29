@@ -49,6 +49,7 @@ public class RepairGun : MonoBehaviour
                     if (currPart != null)
                     {
                         currPart.GetComponent<ShipPart>().repairing = false;
+                        currPart = null;
                     }
                 }
 

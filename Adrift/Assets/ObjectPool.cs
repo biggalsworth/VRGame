@@ -38,8 +38,6 @@ public class ObjectPool : MonoBehaviour
             {
                 //update availability
                 objects[obj.Key] = false;
-                //the dictionary uses the gameobject as the key, so use the key as the gameobject
-                obj.Key.SetActive(true);
                 return obj.Key;
             }
         }

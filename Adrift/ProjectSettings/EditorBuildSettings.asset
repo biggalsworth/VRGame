@@ -15,14 +15,17 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScene.unity
     guid: a41436271ee2a684d8bcf087b5a4db86
   - enabled: 1
+    path: Assets/Scenes/AtruvisSpace.unity
+    guid: 36a629ca9cd82a644b67a41f78bab096
+  - enabled: 1
     path: Assets/Scenes/Invaded.unity
     guid: 9aeed6be2e4cac9448ca079698899099
   - enabled: 1
     path: Assets/Scenes/Practice/Weapons.unity
     guid: 5d25405a07fee1f4eac957df7a8f6888
   - enabled: 1
-    path: Assets/Scenes/AtruvisSpace.unity
-    guid: 36a629ca9cd82a644b67a41f78bab096
+    path: Assets/Scenes/Practice/Repair.unity
+    guid: 030df3f54bae1a843985ef39d0f60ad8
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 4aff3f2c5bfff4e4a8229f1bb83d3224, type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 10f4fcc9ee260f04eb56e81d0d2acf69, type: 2}

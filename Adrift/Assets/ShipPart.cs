@@ -32,12 +32,18 @@ public class ShipPart : MonoBehaviour
         }
         if (currHealth >= partHealth && broken)
         {
+            brokenMesh.SetActive(false);
+            repairedMesh.SetActive(true);
             broken = false;
             Debug.Log("REPAIRED");
             GameObject.FindGameObjectWithTag("ShipParent").GetComponent<ShipStats>().shipHealth += 10f;
             GameObject.FindGameObjectWithTag("ShipParent").GetComponent<ShipStats>().damageSeverity -= 1;
-            repairedMesh.SetActive(true);
+        }
+
+        if(currHealth >= partHealth && !repairedMesh.activeSelf)
+        {
             brokenMesh.SetActive(false);
+            repairedMesh.SetActive(true);
         }
     }
 

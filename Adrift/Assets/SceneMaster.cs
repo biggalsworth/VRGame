@@ -64,7 +64,7 @@ public class SceneMaster : MonoBehaviour
         }
         WarningUI.SetActive(true);
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene("Invade", LoadSceneMode.Single);
+        SceneManager.LoadScene("Invaded", LoadSceneMode.Single);
     }
 
     public void ReturnToShip()
