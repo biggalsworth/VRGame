@@ -15,7 +15,7 @@ public class SeatControllerInput : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        ship.Sit();
+        //ship.Sit();
     }
 
     // Update is called once per frame

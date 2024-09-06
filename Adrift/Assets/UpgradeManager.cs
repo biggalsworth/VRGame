@@ -21,6 +21,9 @@ public class UpgradeManager : MonoBehaviour
     public TextMeshProUGUI shieldText;
     public TextMeshProUGUI shieldPrice;
 
+    public TextMeshProUGUI minerText;
+    public TextMeshProUGUI minerPrice;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +42,10 @@ public class UpgradeManager : MonoBehaviour
         enginePrice.text = "Upgrade:\n" + (20 * (bonus.stabiliserLevel + 1)).ToString();
 
         shieldText.text = "Current level = " + bonus.shieldLevel.ToString();
-        shieldPrice.text = "Upgrade:\n" + (100 * (bonus.shieldLevel + 1)).ToString();
+        shieldPrice.text = "Upgrade:\n" + (115 * (bonus.shieldLevel + 1)).ToString();
+
+        minerText.text = "Current level = " + bonus.minerLevel.ToString();
+        minerPrice.text = "Upgrade:\n" + (100 * (bonus.minerLevel + 1)).ToString();
     }
 
     public void Upgrade(string name)
@@ -69,6 +75,14 @@ public class UpgradeManager : MonoBehaviour
                 stats.cargoValue -= 100 * (bonus.shieldLevel + 1);
             }
         }
+        if (name == "miner")
+        {
+            if(bonus.minerLevel < 5)
+            {
+                bonus.shieldLevel += 1;
+                stats.cargoValue -= 100 * (bonus.shieldLevel + 1);
+            }
+        }
     }
     public void Downgrade(string name)
     {
@@ -92,6 +106,13 @@ public class UpgradeManager : MonoBehaviour
             if (bonus.shieldLevel > 0)
             {
                 bonus.shieldLevel -= 1;
+            }
+        }
+        if (name == "miner")
+        {
+            if (bonus.minerLevel > 0)
+            {
+                bonus.minerLevel -= 1;
             }
         }
     }

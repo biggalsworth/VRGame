@@ -88,6 +88,11 @@ public class BasicDrive : MonoBehaviour
         dismountButton.action.performed -= dismount;
     }
 
+    private void Start()
+    {
+        //player = GameObject.FindWithTag("Player");
+        Sit();
+    }
 
     // Update is called once per frame
     void Update()
@@ -109,11 +114,11 @@ public class BasicDrive : MonoBehaviour
                             //add forward direction based on seat orientation
                             //make sure to make the throttle increase with the ships allowed speed in ship stats
                             //*1000.0 to counteract the heavy mass
-                            rb.AddForce(seatPos.transform.forward * (currThrottle * GetComponent<ShipStats>().speed) * 1000.0f, ForceMode.Force);
+                            rb.AddForce(seatPos.transform.forward * (currThrottle * GetComponent<ShipStats>().speed * Bonuses.instance.speedBonus) * 1000.0f, ForceMode.Force);
                         }
                         else
                         {
-                            rb.AddForce(seatPos.transform.forward * (currThrottle * 0.5f) * 1000.0f, ForceMode.Force);
+                            //rb.AddForce(seatPos.transform.forward * (currThrottle * 0.5f) * 1000.0f, ForceMode.Force);
                         }
 
 
@@ -151,6 +156,13 @@ public class BasicDrive : MonoBehaviour
                     gameObject.isStatic = true;
                 }
             }
+        }
+
+        if (!sitting)
+        {
+            //locomotion.GetComponent<LocomotionSystem>().enabled = true;
+            //locomotion.GetComponent<ContinuousMoveProviderBase>().enabled = true;
+            //player.GetComponent<CharacterController>().enabled = true;
         }
     }
 

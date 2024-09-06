@@ -7,6 +7,7 @@ public class BulletScript : MonoBehaviour
     private Rigidbody rb;
 
     public bool isEnemyBullet = false;
+    public bool isShipBullet = false;
 
     public float damage = 10.0f;
     public float speed = 5.0f;
@@ -25,6 +26,18 @@ public class BulletScript : MonoBehaviour
 
         lifeFunc = countdown();
         StartCoroutine(lifeFunc);
+    }
+
+    private void OnEnable()
+    {
+        StopCoroutine(lifeFunc);
+        lifeFunc = countdown();
+        StartCoroutine(lifeFunc);
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(lifeFunc);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -74,7 +87,14 @@ public class BulletScript : MonoBehaviour
         rb.velocity = Vector3.zero;
         StopCoroutine(lifeFunc);
         Instantiate(deathEffect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        if (!isShipBullet)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     IEnumerator countdown()

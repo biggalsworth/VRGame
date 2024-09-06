@@ -18,6 +18,8 @@ public class Bonuses : MonoBehaviour
     public int stabiliserLevel = 1;
     [HideInInspector]
     public int shieldLevel = 1;
+    [HideInInspector]
+    public int minerLevel = 1;
 
     public float storageCount;
     public float currValue;
@@ -109,8 +111,11 @@ public class Bonuses : MonoBehaviour
         currHealth = Convert.ToInt32(bonuses[5]);
         currWealth = Convert.ToInt32(bonuses[6]);
 
+        //if level 1, bonus should be 0 so minus 1
+        minerLevel = Convert.ToInt32(bonuses[7]) - 1;
+
         shipStats.shipStorage = storageCount;
-        shipStats.speed += speedBonus;
+        //shipStats.speed += speedBonus;
         shipStats.cargoValue = currValue;
         shipStats.shipHealth = currHealth;
         shipStats.currentWealth = currWealth;

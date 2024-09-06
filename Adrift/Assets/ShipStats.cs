@@ -173,11 +173,12 @@ public class ShipStats : MonoBehaviour
     {
         while (true)
         {
-            canHeal = false;
-            if (shipHealth < maxHealth && canHeal && shipHealth >= 40)
+            if (shipHealth < maxHealth &&  shipHealth >= 40)
             {
                 shipHealth += 2.0f;
             }
+
+            canHeal = false;
 
             yield return new WaitForSeconds(5f);
 

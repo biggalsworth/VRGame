@@ -102,7 +102,7 @@ public class MiningLaser : MonoBehaviour
             if (currTarg.GetComponent<SpawnedObjClass>().type == ObjectType.Asteroid)
             {
                 Debug.Log("MINING ASTEROID");
-                currTarg.GetComponent<SpawnedObjClass>().currDurability -= 5.0f;
+                currTarg.GetComponent<SpawnedObjClass>().currDurability -= 5.0f + (Bonuses.instance.minerLevel * 1.5f);
             }
         }
 

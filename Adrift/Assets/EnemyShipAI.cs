@@ -115,11 +115,11 @@ public class EnemyShipAI : MonoBehaviour
                 // how far out are we to the players viewing angle
                 float angleToEnemy = Vector3.Angle(target.transform.forward, playerSight);
 
-                if (angleToEnemy > 65f)
+                if (angleToEnemy > 80f)
                 {
                     Debug.Log("Going to the front");
                     rb.velocity = Vector3.zero;
-                    transform.LookAt(targetFront + target.transform.forward * 20f);
+                    transform.LookAt(targetFront);
                     rb.AddForce(transform.forward * 30f, ForceMode.Impulse);
                     yield return new WaitForSeconds(2f);
                     rb.velocity = Vector3.zero;

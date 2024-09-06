@@ -109,6 +109,7 @@ Kitchen Appliance - Low Poly by ALSTRA INFINITE
 Food Pack Mixed by BRAIN FAIL PRODUCTIONS
 Sci-fi GUI skin by 3D.RINA
 Sci Fi Gun by MASH VIRTUAL
+Ghoul Anklegrabber by SKULLVERTEX
 
 Audio 
 Audio and some music provided by Pixabay

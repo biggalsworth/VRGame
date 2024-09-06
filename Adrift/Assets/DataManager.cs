@@ -24,7 +24,8 @@ public class DataManager : MonoBehaviour
 {3}: Storage
 {4}: Value
 {5}: Health
-{6}: Wealth", 1, 1, 1, 0, 0, 100, 0);
+{6}: Wealth
+{7}: Miner", 1, 1, 1, 0, 0, 100, 0, 1);
 
     #endregion
     // Start is called before the first frame update
@@ -84,7 +85,8 @@ public class DataManager : MonoBehaviour
 {3}: Storage
 {4}: Value
 {5}: Health
-{6}: Wealth", 1, 1, 1,0, 0, 100, 0);
+{6}: Wealth
+{7}: Miner", 1, 1, 1,0, 0, 100, 0, 1);
 
         //Write some text to the test.txt file
         StreamWriter writer = new StreamWriter(path, false);
@@ -113,7 +115,8 @@ public class DataManager : MonoBehaviour
 {3}: Storage
 {4}: Value
 {5}: Health
-{6}: Wealth", data.engineLevel.ToString(), data.stabiliserLevel.ToString(), data.shieldLevel.ToString(), data.storageCount.ToString(), data.currValue.ToString(), data.currHealth.ToString(), data.currWealth.ToString());
+{6}: Wealth
+{7}: Miner", data.engineLevel.ToString(), data.stabiliserLevel.ToString(), data.shieldLevel.ToString(), data.storageCount.ToString(), data.currValue.ToString(), data.currHealth.ToString(), data.currWealth.ToString(), data.minerLevel.ToString());
 
         //Write some text to the test.txt file
         StreamWriter writer = new StreamWriter(path, false);

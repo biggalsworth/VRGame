@@ -20,7 +20,7 @@ public class CargoHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateWealth();
     }
     
     public void Sell()
@@ -28,7 +28,6 @@ public class CargoHandler : MonoBehaviour
         shipStats.currentWealth += shipStats.cargoValue;
         shipStats.cargoValue = 0;
         shipStats.shipStorage = 0;
-        UpdateWealth();
     }
 
     void UpdateWealth()

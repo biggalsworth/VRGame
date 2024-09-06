@@ -33,6 +33,10 @@ public class ObjectPool : MonoBehaviour
         //need to get the items from the dictionary
         foreach (KeyValuePair<GameObject, bool> obj in objects)
         {
+            if(obj.Key.activeSelf == false)
+            {
+                objects[obj.Key] = true;
+            }
             //check the availability
             if (obj.Value == true)
             {

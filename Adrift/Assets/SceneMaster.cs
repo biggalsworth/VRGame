@@ -10,7 +10,7 @@ public class SceneMaster : MonoBehaviour
     public bool canChange = true;
 
     [Header("For enemy boarding")]
-    public GameObject WarningUI;
+    public GameObject WarningUI = null;
 
 
     // Start is called before the first frame update

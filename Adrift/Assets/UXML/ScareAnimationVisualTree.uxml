@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="Variables" style="flex-grow: 1;">
+        <ui:Label tabindex="-1" text="Variables for animation" display-tooltip-when-elided="true" style="font-size: 18px;" />
+        <uie:PropertyField binding-path="monsterAnim" />
+        <uie:PropertyField binding-path="animType" name="TypeOfAnim" label="Type Of Animation" />
+    </ui:VisualElement>
+    <ui:VisualElement name="RunAcrossData" style="flex-grow: 1; padding-top: 10px;">
+        <ui:Label tabindex="-1" text="Locations for running" display-tooltip-when-elided="true" name="Label" style="height: 26px; width: 339px; font-size: 18px;" />
+        <uie:PropertyField binding-path="startPos" label="Starting Positon" />
+        <uie:PropertyField binding-path="endPos" label="End Position" />
+        <uie:PropertyField binding-path="moveSpeed" label="Movement Speed" />
+    </ui:VisualElement>
+</ui:UXML>
